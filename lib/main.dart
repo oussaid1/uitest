@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:uitest/extensions.dart';
 import 'package:uitest/theme.dart';
 import 'date_picker.dart';
 import 'navbar.dart';
@@ -123,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                   onChanged: (value) {
                     log('onChanged: $value');
                   },
-                  initialItem: null,
+                  initialItem: 'Apple',
                 ),
               ),
               NumberIncrementerWidget(
@@ -137,10 +136,9 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 width: 200,
                 height: 50,
-                child: SelectOrAddNewCategory(
-                  hintText: 'Select Add New Category',
-                  labelText: 'Category',
-                  initialItem: null,
+                child: SelectOrAddNewDropDown(
+                  hintText: 'Category',
+                  initialItem: 'Plant',
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please select or add a category';
@@ -196,12 +194,12 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Are you sure you want to delete $itemName?'),
-              SearchCategorySpinner(
+              SelectOrAddNewDropDown(
                 list: items,
-                onChanged: (value) {
+                onSaved: (value) {
                   toast('onChanged: $value');
                 },
-                initialItem: "Grape",
+                initialItem: "Egg",
               ),
               SelectDate(
                 initialDateTime: DateTime.now().add(const Duration(days: 10)),
