@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:uitest/theme.dart';
+import 'data_table.dart';
 import 'date_picker.dart';
 import 'navbar.dart';
 import 'number_incrementer.dart';
@@ -155,7 +156,7 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        //const Expanded(child: MyDataTableDemo()),
+        const Expanded(child: MyDataTableDemo()),
       ],
     );
   }

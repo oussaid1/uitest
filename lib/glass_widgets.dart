@@ -110,6 +110,8 @@ class BluredContainer extends StatelessWidget {
 
 class AppConstants {
   static const double radius = 6;
+
+  static Color whiteOpacity = Colors.white.withOpacity(0.3);
 }
 
 class GlassMaterial extends StatelessWidget {
