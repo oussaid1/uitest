@@ -22,9 +22,10 @@ class MThemeData {
     ],
   );
   /////// light theme
-  static const accentColorm = Color(0xFF1EABFB);
-  static const primaryColorm = Color(0xFF0074B6);
-  static const secondaryColorm = Color(0xFF00446D);
+  static const accentColorm = Color(0xff61E3AF);
+  static const accentColorm2 = Color(0xff38B2F7);
+  static const primaryColorm = Color.fromARGB(255, 8, 64, 97);
+  static const secondaryColorm = Color(0xff61E3AF);
   static const hintColorm = Color(0xFF7FBFE2);
   static const hint2Colorm = Color.fromARGB(255, 22, 45, 61);
   static const almostWhiteColorm = Color(0xFFFAFAFA);

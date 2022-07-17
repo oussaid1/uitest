@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'theme.dart';
-
 class NumberIncrementerWidget extends StatefulWidget {
   final num fraction;
   final bool signed;
