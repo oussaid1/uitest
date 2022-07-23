@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
+import 'glass_widgets.dart';
+
 @immutable
 class User {
   const User({
@@ -52,6 +54,26 @@ class AutocompleteBasicUserExample extends StatelessWidget {
               .toString()
               .contains(textEditingValue.text.toLowerCase());
         });
+      },
+      fieldViewBuilder: (BuildContext context,
+          TextEditingController textEditingController,
+          FocusNode focusNode,
+          VoidCallback onFieldSubmitted) {
+        return TextFormField(
+          controller: textEditingController,
+          decoration: InputDecoration(
+            labelText: 'Category',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(6.0),
+              borderSide: BorderSide(color: AppConstants.whiteOpacity),
+            ),
+            //border: InputBorder.none,
+            hintText: 'category_hint',
+            hintStyle: Theme.of(context).textTheme.subtitle2!,
+            filled: true,
+          ),
+          focusNode: focusNode,
+        );
       },
       onSelected: (User selection) {
         log('Selected: $selection');

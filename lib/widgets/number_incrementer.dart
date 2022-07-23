@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:uitest/extentions.dart';
 
 class NumberIncrementerWidget extends StatefulWidget {
   final num fraction;
   final bool signed;
+  final num? initialValue;
+  final void Function(num) onChanged;
+  final num? limitUp;
+  final num? limitDown;
+  final String? labelText;
 
   const NumberIncrementerWidget({
     Key? key,
     required this.onChanged,
+    this.labelText = 'Number',
+    this.initialValue,
     this.fraction = 1,
     this.signed = false,
+    this.limitUp,
+    this.limitDown = 1,
   }) : super(key: key);
-  final void Function(num) onChanged;
 
   @override
   State<NumberIncrementerWidget> createState() =>
@@ -18,54 +28,76 @@ class NumberIncrementerWidget extends StatefulWidget {
 }
 
 class _NumberIncrementerWidgetState extends State<NumberIncrementerWidget> {
-  num number = 1;
+  late num number;
+  @override
+  void initState() {
+    if (widget.initialValue != null) {
+      setState(() {
+        number = widget.initialValue!;
+      });
+    } else {
+      number = 1;
+    }
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 41,
-      margin: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).bottomAppBarColor),
-          borderRadius: BorderRadius.circular(6)),
-      width: 140,
-      child: Row(
-        children: [
-          IconButton(
-              icon: const Icon(
-                Icons.arrow_drop_down,
-                size: 30,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                if (widget.signed) {
-                  setState(() {
-                    number -= widget.fraction;
+    return TextField(
+      readOnly: true,
+      inputFormatters: [
+        /// numbers opnly
+        FilteringTextInputFormatter.allow(RegExp('[0-9.]+')),
+      ],
+      controller: TextEditingController(text: number.toString()),
+      keyboardType: TextInputType.number,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.headline3,
+      decoration: InputDecoration(
+        prefixIcon: IconButton(
+            icon: Icon(
+              Icons.remove_circle_outline_outlined,
+              color: context.theme.primaryContainer,
+            ),
+            onPressed: () {
+              if (widget.signed) {
+                setState(() {
+                  number -= widget.fraction;
+                  widget.onChanged(number);
+                });
+              } else if (number > widget.limitDown!) {
+                setState(() {
+                  number -= widget.fraction;
+                  widget.onChanged(number);
+                });
+              }
+            }),
+        suffixIcon: IconButton(
+            icon: const Icon(Icons.add_circle_outline_outlined),
+            color: context.theme.primaryContainer,
+            onPressed: () {
+              if (widget.limitUp != null) {
+                setState(() {
+                  while (number < widget.limitUp!) {
+                    number += widget.fraction;
                     widget.onChanged(number);
-                  });
-                } else if (number > 0) {
-                  setState(() {
-                    number -= widget.fraction;
-                    widget.onChanged(number);
-                  });
-                }
-              }),
-          Expanded(
-              child: Text(
-            number.toString(),
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline3,
-          )),
-          IconButton(
-              icon: const Icon(Icons.arrow_drop_up),
-              color: Colors.white,
-              iconSize: 30,
-              onPressed: () {
+                  }
+                });
+              } else {
                 setState(() {
                   number += widget.fraction;
                 });
                 widget.onChanged(number);
-              }),
-        ],
+              }
+            }),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+        filled: true,
+        hintText: '0',
+        label: Text(widget.labelText ?? 'Number',
+            style: Theme.of(context).textTheme.bodyMedium),
       ),
     );
   }

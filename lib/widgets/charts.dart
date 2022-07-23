@@ -2,13 +2,18 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
+import 'package:uitest/extentions.dart';
+import '../glass_widgets.dart';
+import '../models/models.dart';
 import '../theme.dart';
 
 class LineChart extends ConsumerWidget {
+  final String title;
   final List<ChartData> data;
+
   const LineChart({
     Key? key,
+    required this.title,
     required this.data,
   }) : super(key: key);
   @override
@@ -82,19 +87,19 @@ class LineChart extends ConsumerWidget {
                   name: 'Sales'.tr(),
                   color: MThemeData.salesColor,
                   dataSource: const [],
-                  xValueMapper: (ChartData sales, _) => sales.getDate,
+                  xValueMapper: (ChartData sales, _) => sales.date,
                   yValueMapper: (ChartData sales, _) => sales.value),
               SplineSeries<ChartData, DateTime>(
                   name: 'Products'.tr(),
                   color: MThemeData.productColor,
                   dataSource: data,
-                  xValueMapper: (ChartData sales, _) => sales.getDate,
+                  xValueMapper: (ChartData sales, _) => sales.date,
                   yValueMapper: (ChartData sales, _) => sales.value),
               SplineSeries<ChartData, DateTime>(
                   name: 'Services'.tr(),
                   color: MThemeData.serviceColor,
                   dataSource: const [],
-                  xValueMapper: (ChartData sales, _) => sales.getDate,
+                  xValueMapper: (ChartData sales, _) => sales.date,
                   yValueMapper: (ChartData sales, _) => sales.value),
             ],
           ),
@@ -104,18 +109,20 @@ class LineChart extends ConsumerWidget {
   }
 }
 
-class ChartData {
-  String? title;
-  double? value;
-  DateTime? getDate;
-  Color? color;
-  ChartData(this.title, this.value, this.getDate, [this.color]);
-}
+// class ChartData {
+//   String? label;
+//   double? value;
+//   DateTime? date;
+//   Color? color;
+//   ChartData(this.label, this.value, this.date, [this.color]);
+// }
 
 class PieChart extends StatelessWidget {
   final List<ChartData> data;
+  final String title;
   const PieChart({
     Key? key,
+    required this.title,
     required this.data,
   }) : super(key: key);
   @override
@@ -129,11 +136,11 @@ class PieChart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Product Categories In Stock'.tr(),
+                title,
                 style: Theme.of(context)
                     .textTheme
                     .headline3!
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
+                    .copyWith(color: context.theme.primary),
               ),
             ],
           ),
@@ -158,11 +165,13 @@ class PieChart extends StatelessWidget {
           explode: true,
           explodeOffset: '20%',
           dataSource: data.take(8).toList(),
-          xValueMapper: (ChartData data, _) => data.title as String,
+          xValueMapper: (ChartData data, _) => data.label as String,
           yValueMapper: (ChartData data, _) => data.value,
-          dataLabelMapper: (ChartData data, _) => data.title,
+          dataLabelMapper: (ChartData data, _) => data.label,
           dataLabelSettings: const DataLabelSettings(
-            isVisible: true,
+            isVisible: false,
+            alignment: ChartAlignment.far,
+            angle: -45,
           ))
     ];
   }
@@ -170,9 +179,11 @@ class PieChart extends StatelessWidget {
 
 class BarChart extends StatelessWidget {
   final List<ChartData> data;
+  final String title;
   const BarChart({
     Key? key,
     required this.data,
+    required this.title,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -244,24 +255,236 @@ class BarChart extends StatelessWidget {
                   name: 'Services'.tr(),
                   color: MThemeData.productColor,
                   dataSource: data,
-                  xValueMapper: (ChartData sales, _) => (sales.getDate),
+                  xValueMapper: (ChartData sales, _) => (sales.date),
                   yValueMapper: (ChartData sales, z) => sales.value),
               ColumnSeries<ChartData, DateTime>(
                   name: 'Products',
                   color: MThemeData.serviceColor,
                   dataSource: [],
-                  xValueMapper: (ChartData sales, _) => sales.getDate,
+                  xValueMapper: (ChartData sales, _) => sales.date,
                   yValueMapper: (ChartData sales, _) => sales.value),
               ColumnSeries<ChartData, DateTime>(
                   name: 'Sales',
                   color: MThemeData.expensesColor,
                   dataSource: [],
-                  xValueMapper: (ChartData sales, _) => sales.getDate,
+                  xValueMapper: (ChartData sales, _) => sales.date,
                   yValueMapper: (ChartData sales, _) => sales.value),
             ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class RadialChart extends StatelessWidget {
+  final String title;
+  final Revenu? data;
+  const RadialChart({
+    Key? key,
+    required this.title,
+    this.data,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    List<ChartData> chartData = [
+      ChartData(
+        color: MThemeData.revenuColor,
+        label: 'Revenu',
+        value: 4530,
+      ),
+      ChartData(
+        color: MThemeData.expensesColor,
+        label: 'Expense',
+        value: 535,
+      ),
+      ChartData(
+        color: MThemeData.productColor,
+        label: 'Debts',
+        value: 6678,
+      ),
+      ChartData(
+        color: MThemeData.incomeColor,
+        label: 'Incomes',
+        value: 700,
+      ),
+      ChartData(
+        color: MThemeData.profitColor,
+        label: 'Profit',
+        value: 4560,
+      ),
+    ];
+
+    return Material(
+        color: Colors.transparent,
+        child: BluredContainer(
+          child: Column(
+            children: [
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Padding(
+              //       padding: const EdgeInsets.only(left: 8.0),
+              //       child: Row(
+              //         children: [
+              //           const Icon(FontAwesomeIcons.moneyBill1Wave),
+              //           const SizedBox(width: 8),
+              //           Text(
+              //             'Revenu'.tr(),
+              //             style: Theme.of(context)
+              //                 .textTheme
+              //                 .headline3!
+              //                 .copyWith(
+              //                     color: Theme.of(context).colorScheme.primary),
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //     const Icon(Icons.more_vert),
+              //   ],
+              // ),
+              const SizedBox(height: 15),
+              Stack(
+                fit: StackFit.passthrough,
+                alignment: Alignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: SizedBox(
+                        // color: Color.fromARGB(137, 255, 245, 231),
+                        height: 160,
+                        child: SfCircularChart(
+                          centerX: '90',
+
+                          // legend: Legend(
+                          //   //alignment: ChartAlignment.far,
+                          //   isResponsive: true,
+                          //   iconBorderWidth: 2,
+                          //   isVisible: true,
+                          //   overflowMode: LegendItemOverflowMode.wrap,
+                          //   backgroundColor: const Color.fromARGB(0, 255, 255, 255),
+                          //   textStyle: Theme.of(context)
+                          //       .textTheme
+                          //       .subtitle2!
+                          //       .copyWith(
+                          //           color: Theme.of(context).colorScheme.onPrimary),
+                          // ),
+                          series: [
+                            RadialBarSeries<ChartData, String>(
+                              animationDuration: 0,
+                              // pointRadiusMapper: (ChartSampleData data, ) => data.xValue as String,
+                              //maximumValue: 100,
+                              radius: '110%',
+                              gap: '12%',
+                              //  trackColor: Theme.of(context).colorScheme.background,
+                              innerRadius: '20%',
+                              animationDelay: 200,
+                              dataLabelSettings: DataLabelSettings(
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle2!
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary),
+                                  isVisible: false,
+                                  labelPosition: ChartDataLabelPosition.inside),
+                              dataSource: chartData,
+                              cornerStyle: CornerStyle.bothCurve,
+                              xValueMapper: (ChartData data, _) => data.label,
+                              // '${data.label} : ${data.value!.toPrecision()}',
+                              yValueMapper: (ChartData data, _) => data.value,
+                              pointColorMapper: (ChartData data, _) =>
+                                  data.color,
+                              dataLabelMapper: (ChartData data, _) =>
+                                  data.value!.toPrecision(2).toString(),
+                            )
+                          ],
+                          tooltipBehavior: TooltipBehavior(enable: true),
+                        )),
+                  ),
+                  Positioned(
+                    right: 15,
+                    height: 200,
+                    width: 180,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildLegendItem(context,
+                            color: chartData[0].color!,
+                            label: chartData[0].label!,
+                            value: chartData[0].value!.toPrecision(2)),
+                        _buildLegendItem(context,
+                            color: chartData[1].color!,
+                            label: chartData[1].label!,
+                            value: chartData[1].value!.toPrecision(2)),
+                        _buildLegendItem(context,
+                            color: chartData[2].color!,
+                            label: chartData[2].label!,
+                            value: chartData[2].value!.toPrecision(2)),
+                        _buildLegendItem(context,
+                            color: chartData[3].color!,
+                            label: chartData[3].label!,
+                            value: chartData[3].value!.toPrecision(2)),
+                        _buildLegendItem(context,
+                            color: chartData[4].color!,
+                            label: chartData[4].label!,
+                            value: chartData[4].value!.toPrecision(2)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ));
+  }
+
+  _buildLegendItem(BuildContext context,
+      {required String label, required Color color, required double value}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: color,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: 4),
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(label,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .subtitle2!
+                        .copyWith(color: color)),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text('$value',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.subtitle2!),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

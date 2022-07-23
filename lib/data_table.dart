@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-import 'models/product.dart';
+import 'models/product/product.dart';
 import 'search_by_widget.dart';
 
 class MyDataTableDemo extends StatefulWidget {
@@ -157,7 +157,7 @@ class ProductTableDataSource extends DataTableSource {
           }
         },
         cells: [
-          DataCell(Text(row.id.toString())),
+          DataCell(Text(row.pId.toString())),
           DataCell(Text(row.barcode.toString())),
           DataCell(
               GestureDetector(onTap: onPressed, child: Text(row.productName))),
@@ -211,7 +211,7 @@ class ProductTableDataSource extends DataTableSource {
     switch (category) {
       case "ID":
         _rows =
-            products.where((row) => row.id.toString().contains(text)).toList();
+            products.where((row) => row.pId.toString().contains(text)).toList();
         notifyListeners();
         break;
       case "Barcode":

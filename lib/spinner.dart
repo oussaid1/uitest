@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:uitest/extensions.dart';
+import 'package:uitest/extentions.dart';
 
 import 'glass_widgets.dart';
 
@@ -18,7 +18,7 @@ class MObjectsSpinner extends StatefulWidget {
   final void Function(dynamic) onChanged;
   final String? Function(dynamic)? validator;
 
-  final String? initialItem;
+  final dynamic? initialItem;
 
   @override
   State<MObjectsSpinner> createState() => _MObjectsSpinnerState();
@@ -75,7 +75,7 @@ class _MObjectsSpinnerState extends State<MObjectsSpinner> {
                   hint: Text(
                     'Search by'.tr(),
                     style: Theme.of(context).textTheme.headline6!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: context.theme.primary,
                         ),
                   ),
                   value: widget.initialItem, //selecrtedValue,
@@ -181,7 +181,7 @@ class _SearchCategorySpinnerState extends State<SearchCategorySpinner> {
                   hint: Text(
                     'Search by'.tr(),
                     style: Theme.of(context).textTheme.headline6!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: context.theme.primary,
                         ),
                   ),
                   value: widget.initialItem, //selecrtedValue,
@@ -292,7 +292,7 @@ class _SelectOrAddNewState extends State<SelectOrAddNewDropDown> {
                     hint: Text(
                       'Search by'.tr(),
                       style: Theme.of(context).textTheme.headline6!.copyWith(
-                            color: Theme.of(context).colorScheme.primary,
+                            color: context.theme.primary,
                           ),
                     ),
                     value: widget.initialItem, //selecrtedValue,

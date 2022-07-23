@@ -1,23 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:uitest/extensions.dart';
+import 'package:uitest/extentions.dart';
 
 // final pickedDateTime = StateProvider<DateTime>((ref) {
 //   return DateTime.now();
 // });
 
 class SelectDate extends StatefulWidget {
+  final String? labelText;
+
   const SelectDate({
     Key? key,
-    this.initialDateTime,
+    this.labelText = 'Date',
+    this.initialDate,
     this.firstDate,
     this.lastDate,
-    this.onDateChanged,
+    this.onDateSelected,
   }) : super(key: key);
-  final DateTime? initialDateTime;
+  final DateTime? initialDate;
   final DateTime? firstDate;
   final DateTime? lastDate;
-  final void Function(DateTime)? onDateChanged;
+  final void Function(DateTime)? onDateSelected;
 
   @override
   State<SelectDate> createState() => _SelectDateState();
@@ -25,17 +27,17 @@ class SelectDate extends StatefulWidget {
 
 class _SelectDateState extends State<SelectDate> {
   //final DatePickerMode initialDatePickerMode;
-  DateTime? _pickedDateTime;
+  DateTime? _pickedDateTime = DateTime.now();
   void selectDate(BuildContext context) async {
     DateTime picked = (await showDatePicker(
       context: context,
-      initialDate: widget.initialDateTime ?? DateTime.now(),
+      initialDate: widget.initialDate ?? DateTime.now(),
       firstDate: widget.firstDate ?? DateTime(2010),
       lastDate: widget.lastDate ?? DateTime(2030),
       // initialEntryMode: DatePickerEntryMode.input,
     ))!;
     if (picked != DateTime.now()) {
-      widget.onDateChanged!.call(picked);
+      widget.onDateSelected!.call(picked);
       setState(() {
         _pickedDateTime = picked;
       });
@@ -44,9 +46,9 @@ class _SelectDateState extends State<SelectDate> {
 
   @override
   void initState() {
-    if (widget.initialDateTime != null) {
-      _pickedDateTime = widget.initialDateTime;
-      widget.onDateChanged!.call(widget.initialDateTime!);
+    if (widget.initialDate != null) {
+      _pickedDateTime = widget.initialDate;
+      // widget.onDateChanged!.call(widget.initialDateTime!);
     }
 
     super.initState();
@@ -54,30 +56,26 @@ class _SelectDateState extends State<SelectDate> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: 140,
-        height: 50,
-        child: GestureDetector(
-          onTap: () => selectDate(context),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.0),
-              boxShadow: const [],
-            ),
-            child: Row(
-              children: [
-                const Icon(
-                  CupertinoIcons.calendar,
-                  color: Colors.grey,
-                  size: 18,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8),
-                  child: Text((_pickedDateTime)!.ddmmyyyy()),
-                ),
-              ],
-            ),
-          ),
-        ));
+    return TextField(
+      controller: TextEditingController(
+        text: _pickedDateTime?.ddmmyyyy(),
+      ),
+      onTap: () {
+        selectDate(context);
+      },
+      decoration: InputDecoration(
+        hintText: 'Select Date',
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+        filled: true,
+        prefixIcon: const Icon(
+          Icons.calendar_today,
+          size: 18,
+        ),
+        label: Text(widget.labelText ?? 'Date',
+            style: Theme.of(context).textTheme.bodyMedium),
+      ),
+    );
   }
 }

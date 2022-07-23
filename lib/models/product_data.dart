@@ -1,5 +1,4 @@
-import '../widgets/charts.dart';
-import 'product.dart';
+import 'models.dart';
 
 class ProductData {
   List<ProductModel> products;
@@ -53,14 +52,16 @@ class ProductData {
   /// get a list of ChartData for each day
   List<ChartData> get chartDataDDMMYY {
     return pricesByDay.entries.map((entry) {
-      return ChartData(entry.key.toString(), entry.value, entry.key);
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
     }).toList();
   }
 
   /// get a list of ChartData for each month
   List<ChartData> get chartDataMMYY {
     return pricesByMonth.entries.map((entry) {
-      return ChartData(entry.key.toString(), entry.value, entry.key);
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
     }).toList();
   }
 
@@ -68,7 +69,8 @@ class ProductData {
   /// key is year in, value is sum of prices in
   List<ChartData> get chartDataYY {
     return pricesByYear.entries.map((entry) {
-      return ChartData(entry.key.toString(), entry.value, entry.key);
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
     }).toList();
   }
 
@@ -76,7 +78,8 @@ class ProductData {
   /// key is year in, value is sum of prices in
   List<ChartData> get chartDataYYMMDD {
     return pricesByYear.entries.map((entry) {
-      return ChartData(entry.key.toString(), entry.value, entry.key);
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
     }).toList();
   }
 
@@ -95,14 +98,15 @@ class ProductData {
   /// get a list of ChartData from a map parameter
   List<ChartData> chartData(map) {
     return map.map((entry) {
-      return ChartData(entry.key, entry.value, DateTime.now());
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
     }).toList();
   }
 
   /// get a list of ChartData from a map parameter
   List<ChartData> get chartDataByCategory {
     return pricesByCategory.entries.map((entry) {
-      return ChartData(entry.key, entry.value, DateTime.now());
+      return ChartData(label: entry.key.toString(), value: entry.value);
     }).toList();
   }
 }

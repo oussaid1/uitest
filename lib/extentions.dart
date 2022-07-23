@@ -61,48 +61,48 @@ extension DtExtension on DateTime {
     }
   }
 
-  String ddmmyyyy() {
-    try {
-      return DateFormat("yyyy-MM-dd").format(this);
-    } catch (e) {
-      return '';
-    }
-  }
+//   String ddmmyyyy() {
+//     try {
+//       return DateFormat("yyyy-MM-dd").format(this);
+//     } catch (e) {
+//       return '';
+//     }
+//   }
 
-  String mmyyyy() {
-    try {
-      return DateFormat("yyyy-MM").format(this);
-    } catch (e) {
-      return '';
-    }
-  }
+//   String mmyyyy() {
+//     try {
+//       return DateFormat("yyyy-MM").format(this);
+//     } catch (e) {
+//       return '';
+//     }
+//   }
 
-  String yyyy() {
-    try {
-      return DateFormat("yyyy").format(this);
-    } catch (e) {
-      return '';
-    }
-  }
+//   String yyyy() {
+//     try {
+//       return DateFormat("yyyy").format(this);
+//     } catch (e) {
+//       return '';
+//     }
+//   }
 
-  DateTime stripTime() {
-    {
-      return DateTime(year, month, day, 0, 0, 0);
-    }
-  }
+//   DateTime stripTime() {
+//     {
+//       return DateTime(year, month, day, 0, 0, 0);
+//     }
+//   }
 
-  DateTime stripTimeDay() {
-    {
-      return DateTime(year, month, 00);
-    }
-  }
+//   DateTime stripTimeDay() {
+//     {
+//       return DateTime(year, month, 00);
+//     }
+//   }
 
-  DateTime stripTimeDayMonth() {
-    {
-      return DateTime(year, 00, 00);
-    }
-  }
-}
+//   DateTime stripTimeDayMonth() {
+//     {
+//       return DateTime(year, 00, 00);
+//     }
+//   }
+// }
 
 // extension EnumExtension on SaleType {
 //   String get value => describeEnum(this);
@@ -120,6 +120,7 @@ extension DtExtension on DateTime {
 //         orElse: () => ExpenseCategory.other); //return null if not found
 //   }
 // }
+}
 
 extension EnumParser2 on String {
   DateTime? get getDate {
@@ -135,6 +136,30 @@ extension EnumParser2 on String {
   }
 }
 
+/// extension on [List<String>] to turn all items to lower case
+extension LowerCaseList on List<String> {
+  List<String> toLowerCase() {
+    for (int i = 0; i < length; i++) {
+      this[i] = this[i].toLowerCase();
+    }
+    return this;
+  }
+}
+
+/// extension on DateTime to get a string in the format dd/mm/yyyy
+extension DateTimeExt on DateTime {
+  String ddmmyyyy() {
+    return '$day/$month/$year';
+  }
+}
+
+/// extention on context to get the current theme
+extension ThemeExt on BuildContext {
+  ColorScheme get theme => Theme.of(this).colorScheme;
+  TextTheme get textTheme => Theme.of(this).textTheme;
+}
+
 extension Ex on double {
-  double toPrecision() => double.parse(toStringAsFixed(2));
+  double toPrecision(int digitsAfter) =>
+      double.parse(toStringAsFixed(digitsAfter));
 }

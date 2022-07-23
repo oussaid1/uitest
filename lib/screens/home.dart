@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
+import '../autocomplete.dart';
 import '../data_table.dart';
 import '../spinner.dart';
 import '../widgets/autocomplete_textfield.dart';
@@ -34,68 +35,79 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              SelectDate(
-                initialDateTime: DateTime.now(),
-                onDateChanged: (DateTime date) {},
-              ),
-              const SizedBox(width: 8),
-              IconButton(
-                  onPressed: () {
-                    _controller.clear();
-                  },
-                  icon: const Icon(Icons.textsms)),
-              ElevatedButton(
-                  onPressed: (() {
-                    showDeleteConfirmationDialog(
-                        context, fruits, "itemName", () {});
-                  }),
-                  child: const Text('Change Theme')),
-              SizedBox(
-                height: 50,
-                width: 300,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AutocomleteTextfield(
-                    onSuggestionSelected: (String value) {
-                      log('onSuggestionSelected: $value');
-                    },
-                    suggestions: fruits,
-                    hintText: ' Search',
-                    labelText: 'Search',
-                  ),
-                ),
-              ),
-              NumberIncrementerWidget(
-                fraction: 0.5,
-                signed: true,
-                onChanged: (value) {
-                  log('onChanged: $value');
-                  toast('onChanged: $value');
-                },
-              ),
-              SizedBox(
+              // SizedBox(
+              //   width: 200,
+              //   child: SelectDate(
+              //     firstDate: DateTime.now(),
+              //     onDateSelected: (DateTime date) {},
+              //   ),
+              // ),
+              // const SizedBox(width: 8),
+              // IconButton(
+              //     onPressed: () {
+              //       _controller.clear();
+              //     },
+              //     icon: const Icon(Icons.textsms)),
+              // ElevatedButton(
+              //     onPressed: (() {
+              //       showDeleteConfirmationDialog(
+              //           context, fruits, "itemName", () {});
+              //     }),
+              //     child: const Text('Change Theme')),
+              // SizedBox(
+              //   height: 50,
+              //   width: 300,
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: AutocomleteTextfield(
+              //       onSuggestionSelected: (String value) {
+              //         log('onSuggestionSelected: $value');
+              //       },
+              //       suggestions: fruits,
+              //       hintText: ' Search',
+              //       labelText: 'Search',
+              //     ),
+              //   ),
+              // ),
+              const SizedBox(
                 width: 200,
                 height: 50,
-                child: SelectOrAddNewDropDown(
-                  hintText: 'Category',
-                  initialItem: 'Plant',
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please select or add a category';
-                    }
-                    return null;
+                child: AutocompleteBasicUserExample(),
+              ),
+              SizedBox(
+                width: 300,
+                child: NumberIncrementerWidget(
+                  fraction: 1,
+                  signed: true,
+                  onChanged: (value) {
+                    log('onChanged: $value');
+                    toast('onChanged: $value');
                   },
-                  onSaved: (value) {
-                    log('onSaved: $value');
-                    toast('onSaved: $value');
-                  },
-                  list: fruits,
                 ),
               ),
+              // SizedBox(
+              //   width: 200,
+              //   height: 50,
+              //   child: SelectOrAddNewDropDown(
+              //     hintText: 'Category',
+              //     initialItem: 'Plant',
+              //     validator: (value) {
+              //       if (value!.isEmpty) {
+              //         return 'Please select or add a category';
+              //       }
+              //       return null;
+              //     },
+              //     onSaved: (value) {
+              //       log('onSaved: $value');
+              //       toast('onSaved: $value');
+              //     },
+              //     list: fruits,
+              //   ),
+              // ),
             ],
           ),
         ),
-        const Expanded(child: MyDataTableDemo()),
+        // const Expanded(child: MyDataTableDemo()),
       ],
     );
   }
@@ -142,8 +154,8 @@ class _HomePageState extends State<HomePage> {
                 initialItem: "Egg",
               ),
               SelectDate(
-                initialDateTime: DateTime.now().add(const Duration(days: 10)),
-                onDateChanged: (DateTime date) {},
+                firstDate: DateTime.now().add(const Duration(days: 10)),
+                onDateSelected: (DateTime date) {},
               ),
             ],
           ),
