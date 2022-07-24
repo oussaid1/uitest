@@ -27,7 +27,7 @@ class MThemeData {
   ///static const secondaryColor = Color(0xFF43CEA2);
   ////////////////////
   static const accentColor = Color(0xFFEAB93C);
-  static const primaryColor = Color(0xff38B2F7);
+  static const primaryColor = Color.fromARGB(255, 25, 66, 179);
   static const secondaryColor = Color(0xff61E3AF);
 // black and white
   static const black = Color(0xFF000000);

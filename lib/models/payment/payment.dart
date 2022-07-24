@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -101,7 +102,7 @@ class PaymentModel {
     for (var i = 1; i < 10; i++) {
       list.add(PaymentModel(
         clientId: i.toString(),
-        amount: i * 13,
+        amount: Random().nextInt(1000).toDouble(),
         date: DateTime.now(),
         id: i.toString(),
         clientName: 'client $i',

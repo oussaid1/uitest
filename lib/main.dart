@@ -28,7 +28,10 @@ class MyApp extends StatelessWidget {
                   image: DecorationImage(
                     colorFilter: ColorFilter.mode(
                         Colors.black.withOpacity(0.2), BlendMode.darken),
-                    image: AssetImage('assets/images/lightback.png'),
+                    image: const AssetImage(
+                      'assets/images/lightback.png',
+                      // bundle: AssetBundle,/// TODO: fix this, read docs
+                    ),
                     fit: BoxFit.cover,
                   ),
                   //gradient: MThemeData.gradient1,
@@ -158,7 +161,7 @@ class _AppState extends State<App> {
         const SizedBox(width: 20),
         Expanded(
           child: DefaultTabController(
-            length: 4,
+            length: 3,
             child: Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
@@ -215,12 +218,12 @@ class _AppState extends State<App> {
                         child: Text("Product"),
                       ),
                     ),
-                    Tab(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Text("Service"),
-                      ),
-                    ),
+                    // Tab(
+                    //   child: Align(
+                    //     alignment: Alignment.center,
+                    //     child: Text("Service"),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -229,7 +232,7 @@ class _AppState extends State<App> {
                   DashboardPage(),
                   DebtsView(),
                   HomePage(),
-                  MyNavBarWidget(),
+                  //MyNavBarWidget(),
                 ],
               ),
             ),

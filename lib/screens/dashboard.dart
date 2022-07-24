@@ -187,7 +187,8 @@ class SalesOverAllWidget extends StatelessWidget {
                   DataColumn(
                     label: Text(
                       "Products",
-                      style: Theme.of(context).textTheme.caption!.copyWith(
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.bold,
                             color: context.theme.onSecondaryContainer,
                           ),
                     ),
@@ -196,6 +197,7 @@ class SalesOverAllWidget extends StatelessWidget {
                     label: Text(
                       'Services',
                       style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.bold,
                             color: context.theme.onSecondaryContainer,
                           ),
                     ),
@@ -279,7 +281,7 @@ class StockInventory extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4.0),
               child: Text(label,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       fontWeight: FontWeight.bold,
                       color: context.theme.onSecondaryContainer)),
             ),
@@ -331,13 +333,13 @@ class StockInventory extends StatelessWidget {
                     value: 98740.0,
                     withDollarsign: true,
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 21),
                   buildOneItem(
                     label: 'Price Out',
                     value: 98740.0,
                     withDollarsign: true,
                   ),
-                  const SizedBox(width: 15),
+                  const SizedBox(width: 21),
                   buildOneItem(
                     label: 'Quantity',
                     value: 740,

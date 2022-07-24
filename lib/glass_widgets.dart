@@ -82,9 +82,9 @@ class BluredContainer extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 42, sigmaY: 42),
         child: Container(
-          margin: margin,
-          width: width ?? MediaQuery.of(context).size.width,
-          height: height ?? MediaQuery.of(context).size.height,
+          // margin: margin,
+          width: width ?? 420, // MediaQuery.of(context).size.width,
+          height: height ?? 400, // MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             borderRadius:
                 const BorderRadius.all(Radius.circular(AppConstants.radius)),

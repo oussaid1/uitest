@@ -14,6 +14,8 @@ class DebtData {
     required this.allDebts,
     required this.allpayments,
   });
+
+//DateTime   nearestDeadlineDate = DateTime.now().subtract(const Duration(days: 15));
   // get highest debts
   List<DebtModel> get highestDebts {
     List<DebtModel> debts = allDebts;
@@ -72,15 +74,15 @@ class DebtData {
     return total;
   }
 
-// total paid detsAmount of  debts
-  double get totalPaidDebtAmount {
-    double total = 0;
-    for (var item in allDebts) {
-      total += item.paidAmount;
-    }
-    total += totalPayments;
-    return total;
-  }
+// // total paid detsAmount of  debts
+//   double get totalPaidDebtAmount {
+//     double total = 0;
+//     for (var item in allDebts) {
+//       total += item.paidAmount;
+//     }
+//     total += totalPayments;
+//     return total;
+//   }
 
   // get difference between total unpaid expenses and total paid expenses in percentage
   int get totalDifferencePercentage {
@@ -100,59 +102,24 @@ class DebtData {
 
 // get unit Interval
   double get unitInterval {
-    double total = 0;
-    if (totalDebtAmount != 0) {
-      total = totalPaidDebtAmount / totalDebtAmount;
+    double unit = 0.0;
+    if (totalDebtAmount > 0) {
+      unit = (totalDebtAmountLeft / 100);
     }
-    if (total < 0) {
-      total = 0;
+    if (unit < 0) {
+      unit = 0;
     }
-    if (total > 1) {
-      total = 1;
-    }
-    return total;
-  }
-}
 
-/// join the client object with its payments
-class ClientDebt {
-  ShopClientModel shopClient;
-  List<DebtModel> debts;
-  List<PaymentModel> payments;
-  ClientDebt({
-    required this.shopClient,
-    required this.debts,
-    required this.payments,
-  });
-  // all debts for this client
-  List<DebtModel> get allDebts {
-    return debts.where((element) => element.clientId == shopClient.id).toList();
-  }
-
-  // all payments for this client
-  List<PaymentModel> get allPayments {
-    List<PaymentModel> paymentsall =
-        payments.where((element) => element.clientId == shopClient.id).toList();
-    return paymentsall;
-  }
-
-  // get total payments for the client
-  double get totalPayments {
-    double total = 0;
-    for (var item in allPayments) {
-      total += item.amount;
+    if (unit > 1) {
+      unit = 1;
     }
-    return total;
-  }
 
-  // get total debt amount for the client
-  double get totalDebtAmount {
-    double total = 0;
-    for (var item in allDebts) {
-      total += item.amount;
-    }
-    return total;
+    return unit;
   }
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////
+  ///sums and totals/////////////////////////////////////////////////////
 
   // get total  paid  for the client
   double get totalPaid {
@@ -180,11 +147,26 @@ class ClientDebt {
     return total;
   }
 
+///////////////////////////////////////////////////////////////////////
+  ///other return types /////////////////////////////////////////////////////
   // bool get isPaid if total left is 0
   bool get isFullyPaid {
     return totalLeft == 0;
   }
 
+  /// get the nearest debt deadline Date/////////////////////////////////////////////////////
+  DateTime get nearestDeadlineDate {
+    DateTime nearestDeadlineDate = DateTime.now();
+    for (var item in allDebts) {
+      if (item.deadLine.isBefore(nearestDeadlineDate)) {
+        nearestDeadlineDate = item.deadLine;
+      }
+    }
+    return nearestDeadlineDate;
+  }
+
+  ///////////////////////////////////////////////////////////////////////
+  /// Filtered Lists /////////////////////////////////////////////////////////////
   // get overdue debts for this client
   List<DebtModel> get overdueDebts {
     List<DebtModel> debts =
@@ -215,6 +197,186 @@ class ClientDebt {
     }).toList();
     return debts;
   }
+
+//////////////////////////////////////////////////////////////////////////////
+  /// distincts //////////////////////////////////////////
+  /// for debts///
+  /// get distinct days as a map /////////////////////////////////////////////
+  Map<DateTime, double> get debtsByYear {
+    Map<DateTime, double> debtsByYear = {};
+    for (DebtModel debt in allDebts) {
+      debtsByYear[DateTime(debt.timeStamp.year, 00, 00)] ??= 0.0;
+      debtsByYear[DateTime(debt.timeStamp.year, 00, 00)] =
+          debtsByYear[DateTime(debt.timeStamp.year, 00, 00)]! + debt.amount;
+    }
+    return debtsByYear;
+  }
+
+  /// get distinct months /////////////////////////////////////////////
+  Map<DateTime, double> get debtsByMonth {
+    Map<DateTime, double> debtsByMonth = {};
+    for (DebtModel debt in allDebts) {
+      debtsByMonth[DateTime(debt.timeStamp.year, debt.timeStamp.month, 00)] ??=
+          0.0;
+      debtsByMonth[DateTime(debt.timeStamp.year, debt.timeStamp.month, 00)] =
+          debtsByMonth[
+                  DateTime(debt.timeStamp.year, debt.timeStamp.month, 00)]! +
+              debt.amount;
+    }
+    return debtsByMonth;
+  }
+
+  /// get distinct years /////////////////////////////////////////////
+  Map<DateTime, double> get debtsByDay {
+    Map<DateTime, double> debtsByDay = {};
+    for (DebtModel debt in allDebts) {
+      debtsByDay[DateTime(debt.timeStamp.year, debt.timeStamp.month,
+          debt.timeStamp.day)] ??= 0.0;
+      debtsByDay[DateTime(debt.timeStamp.year, debt.timeStamp.month,
+          debt.timeStamp.day)] = debtsByDay[DateTime(
+              debt.timeStamp.year, debt.timeStamp.month, debt.timeStamp.day)]! +
+          debt.amount;
+    }
+    return debtsByDay;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  /// for payments///
+  /// get distinct days as a map /////////////////////////////////////////////
+  Map<DateTime, double> get paymentsByYear {
+    Map<DateTime, double> paymentsByYear = {};
+    for (PaymentModel payment in allpayments) {
+      paymentsByYear[DateTime(payment.date.year, 00, 00)] ??= 0.0;
+      paymentsByYear[DateTime(payment.date.year, 00, 00)] =
+          paymentsByYear[DateTime(payment.date.year, 00, 00)]! + payment.amount;
+    }
+    return paymentsByYear;
+  }
+
+  /// get distinct months /////////////////////////////////////////////
+  Map<DateTime, double> get paymentsByMonth {
+    Map<DateTime, double> paymentsByMonth = {};
+    for (PaymentModel payment in allpayments) {
+      paymentsByMonth[DateTime(payment.date.year, payment.date.month, 00)] ??=
+          0.0;
+      paymentsByMonth[DateTime(payment.date.year, payment.date.month, 00)] =
+          paymentsByMonth[
+                  DateTime(payment.date.year, payment.date.month, 00)]! +
+              payment.amount;
+    }
+    return paymentsByMonth;
+  }
+
+  /// get distinct years /////////////////////////////////////////////
+  Map<DateTime, double> get paymentsByDay {
+    Map<DateTime, double> paymentsByDay = {};
+    for (PaymentModel payment in allpayments) {
+      paymentsByDay[DateTime(
+          payment.date.year, payment.date.month, payment.date.day)] ??= 0.0;
+      paymentsByDay[DateTime(
+              payment.date.year, payment.date.month, payment.date.day)] =
+          paymentsByDay[DateTime(
+                  payment.date.year, payment.date.month, payment.date.day)]! +
+              payment.amount;
+    }
+    return paymentsByDay;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  ///get each month debts as a list of ChartData ////////////////////////////////////////////////////////////////
+  /// for debts///
+  /// get a list of ChartData for each day
+  List<ChartData> get debtsChartDataDDMMYY {
+    return debtsByDay.entries.map((entry) {
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
+    }).toList();
+  }
+
+  /// get a list of ChartData for each month
+  List<ChartData> get debtsChartDataMMYY {
+    return debtsByMonth.entries.map((entry) {
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
+    }).toList();
+  }
+
+  /// get a list of ChartData for each year
+  List<ChartData> get debtsChartDataYY {
+    return debtsByYear.entries.map((entry) {
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
+    }).toList();
+  }
+
+//////////////////////////////////////////////////////////////////////////////////
+  /// for payments///
+  /// get a list of ChartData for each day
+  List<ChartData> get paymentsChartDataDDMMYY {
+    return paymentsByDay.entries.map((entry) {
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
+    }).toList();
+  }
+
+  /// get a list of ChartData for each month
+  List<ChartData> get paymentsChartDataMMYY {
+    return paymentsByMonth.entries.map((entry) {
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
+    }).toList();
+  }
+
+  /// get a list of ChartData for each year
+  List<ChartData> get paymentsChartDataYY {
+    return paymentsByYear.entries.map((entry) {
+      return ChartData(
+          label: entry.key.toString(), value: entry.value, date: entry.key);
+    }).toList();
+  }
+//////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+/// join the client object with its payments
+class ClientDebt {
+  ShopClientModel shopClient;
+  List<DebtModel> debts;
+  List<PaymentModel> payments;
+  ClientDebt({
+    required this.shopClient,
+    required this.debts,
+    required this.payments,
+  });
+  // all debts for this client
+  List<DebtModel> get allDebts {
+    return debts.where((element) => element.clientId == shopClient.id).toList();
+  }
+
+  // all payments for this client
+  List<PaymentModel> get allPayments {
+    List<PaymentModel> paymentsall =
+        payments.where((element) => element.clientId == shopClient.id).toList();
+    return paymentsall;
+  }
+
+//////////////////////////////////////////////////////////////////////////////
+  /// get DataClasses for the client //////////////////////////////////////////
+  /// get DebtData for the client /////////////////////////////////////////////
+  DebtData get debtData {
+    return DebtData(
+      allDebts: allDebts,
+      allpayments: allPayments,
+    );
+  }
+
+  ///
+  ////////////////////////////////////////////////////////////////////////////////
+  ///get each month payments as a list of ChartData ////////////////////////////////////////////////////////////////
+  ///
+
 }
 // }
 // // provider for the list of ClientDebt

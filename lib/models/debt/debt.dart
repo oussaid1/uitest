@@ -1,11 +1,20 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models.dart';
-import '../payment/payment.dart';
 part 'debt_data.dart';
 part 'filtered_debts.dart';
+
+enum DebtFilter {
+  all,
+  overdue,
+  today,
+  thisWeek,
+  thisMonth,
+  thisYear,
+}
 
 class DebtModel {
   String? id;
@@ -142,7 +151,7 @@ class DebtModel {
   }
 
   /// fake debts
-  static List<DebtModel> getFakeDebts() {
+  static List<DebtModel> get fakeDebts {
     List<DebtModel> debts = [];
     for (var i = 0; i < 10; i++) {
       debts.add(
@@ -152,7 +161,7 @@ class DebtModel {
           clientId: '$i',
           clientName: 'client $i',
           type: 'product',
-          amount: 100,
+          amount: Random().nextInt(100000).toDouble(),
           paidAmount: 0,
           timeStamp: DateTime.now()..add(Duration(days: -i)),
           deadLine: DateTime.now().add(const Duration(days: 30)),

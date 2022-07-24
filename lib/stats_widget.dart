@@ -26,7 +26,7 @@ class PriceNumberZone extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           withDollarSign
               ? Consumer(builder: (context, ref, _) {

@@ -1,23 +1,5 @@
 import 'package:flutter/material.dart';
 
-class MyNavBarWidget extends StatefulWidget {
-  const MyNavBarWidget({Key? key}) : super(key: key);
-
-  @override
-  MyNavBarWidgetState createState() => MyNavBarWidgetState();
-}
-
-class MyNavBarWidgetState extends State<MyNavBarWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SingleChildScrollView(
-          child: Column(children: const []),
-        ));
-  }
-}
-
 class DropDownButton extends StatelessWidget {
   const DropDownButton({
     Key? key,
