@@ -66,60 +66,58 @@ class _MyDataTableDemoState extends State<MyDataTableDemo> {
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-                Expanded(
-                  child: PaginatedDataTable(
-                    header: const Text('Products Table'),
-                    sortColumnIndex: _sortColumnIndex,
-                    sortAscending: _sortAscending,
-                    showCheckboxColumn: false,
-                    columns: [
-                      const DataColumn(
-                        label: Text('ID'),
-                        tooltip: 'ID',
-                      ),
-                      const DataColumn(
-                        label: Text('Barcode'),
-                        tooltip: 'Barcode',
-                      ),
-                      DataColumn(
-                        label: const Text('Product Name'),
-                        tooltip: 'Product Name',
-                        onSort: (int columnIndex, bool ascending) {
-                          _sort<String>((ProductModel d) => d.productName,
-                              columnIndex, ascending);
-                        },
-                      ),
-                      const DataColumn(
-                        label: Text('Price In'),
-                        tooltip: 'Price In',
-                      ),
-                      const DataColumn(
-                        label: Text('Price Out'),
-                        tooltip: 'Price Out',
-                      ),
-                      const DataColumn(
-                        label: Text('Quantity'),
-                        tooltip: 'Quantity',
-                      ),
-                      const DataColumn(
-                        label: Text('Category'),
-                        tooltip: 'Category',
-                      ),
-                      const DataColumn(
-                        label: Text('Date In'),
-                        tooltip: 'Date In',
-                      ),
-                      const DataColumn(
-                        label: Text('Suplier'),
-                        tooltip: 'Suplier',
-                      ),
-                      const DataColumn(
-                        label: Text('Description'),
-                        tooltip: 'Description',
-                      ),
-                    ],
-                    source: _data,
-                  ),
+                PaginatedDataTable(
+                  header: const Text('Products Table'),
+                  sortColumnIndex: _sortColumnIndex,
+                  sortAscending: _sortAscending,
+                  showCheckboxColumn: false,
+                  columns: [
+                    const DataColumn(
+                      label: Text('ID'),
+                      tooltip: 'ID',
+                    ),
+                    const DataColumn(
+                      label: Text('Barcode'),
+                      tooltip: 'Barcode',
+                    ),
+                    DataColumn(
+                      label: const Text('Product Name'),
+                      tooltip: 'Product Name',
+                      onSort: (int columnIndex, bool ascending) {
+                        _sort<String>((ProductModel d) => d.productName,
+                            columnIndex, ascending);
+                      },
+                    ),
+                    const DataColumn(
+                      label: Text('Price In'),
+                      tooltip: 'Price In',
+                    ),
+                    const DataColumn(
+                      label: Text('Price Out'),
+                      tooltip: 'Price Out',
+                    ),
+                    const DataColumn(
+                      label: Text('Quantity'),
+                      tooltip: 'Quantity',
+                    ),
+                    const DataColumn(
+                      label: Text('Category'),
+                      tooltip: 'Category',
+                    ),
+                    const DataColumn(
+                      label: Text('Date In'),
+                      tooltip: 'Date In',
+                    ),
+                    const DataColumn(
+                      label: Text('Suplier'),
+                      tooltip: 'Suplier',
+                    ),
+                    const DataColumn(
+                      label: Text('Description'),
+                      tooltip: 'Description',
+                    ),
+                  ],
+                  source: _data,
                 ),
               ],
             ),

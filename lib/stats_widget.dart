@@ -35,9 +35,8 @@ class PriceNumberZone extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 3.0),
                     child: Text(
                       currency.toString(),
-                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            fontSize: signSize ?? 10,
-                            color: context.theme.onSecondaryContainer,
+                      style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                            fontSize: signSize ?? 14,
                           ),
                     ),
                   );

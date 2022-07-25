@@ -320,30 +320,6 @@ class RadialChart extends StatelessWidget {
         child: BluredContainer(
           child: Column(
             children: [
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.only(left: 8.0),
-              //       child: Row(
-              //         children: [
-              //           const Icon(FontAwesomeIcons.moneyBill1Wave),
-              //           const SizedBox(width: 8),
-              //           Text(
-              //             'Revenu'.tr(),
-              //             style: Theme.of(context)
-              //                 .textTheme
-              //                 .headline3!
-              //                 .copyWith(
-              //                     color: Theme.of(context).colorScheme.primary),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //     const Icon(Icons.more_vert),
-              //   ],
-              // ),
-              const SizedBox(height: 15),
               Stack(
                 fit: StackFit.passthrough,
                 alignment: Alignment.center,
@@ -355,25 +331,9 @@ class RadialChart extends StatelessWidget {
                         height: 160,
                         child: SfCircularChart(
                           centerX: '90',
-
-                          // legend: Legend(
-                          //   //alignment: ChartAlignment.far,
-                          //   isResponsive: true,
-                          //   iconBorderWidth: 2,
-                          //   isVisible: true,
-                          //   overflowMode: LegendItemOverflowMode.wrap,
-                          //   backgroundColor: const Color.fromARGB(0, 255, 255, 255),
-                          //   textStyle: Theme.of(context)
-                          //       .textTheme
-                          //       .subtitle2!
-                          //       .copyWith(
-                          //           color: Theme.of(context).colorScheme.onPrimary),
-                          // ),
                           series: [
                             RadialBarSeries<ChartData, String>(
                               animationDuration: 0,
-                              // pointRadiusMapper: (ChartSampleData data, ) => data.xValue as String,
-                              //maximumValue: 100,
                               radius: '110%',
                               gap: '12%',
                               //  trackColor: Theme.of(context).colorScheme.background,

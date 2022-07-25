@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:uitest/extentions.dart';
 import 'package:uitest/glass_widgets.dart';
-
 import '../models/models.dart';
 import '../models/product_data.dart';
 import '../stats_widget.dart';
@@ -39,6 +38,39 @@ class DashboardPage extends StatelessWidget {
                 // buildBarChart(),
               ],
             ),
+            const SizedBox(height: 15),
+            // Container(
+            //   width: 300,
+            //   height: 300,
+            //   decoration: BoxDecoration(
+            //     gradient:const LinearGradient(
+            //       transform: GradientRotation(math.pi / 180 * 105),
+            //       colors: [
+            //         Color.fromRGBO(255, 0, 168, 1),
+            //         Color.fromARGB(255, 221, 42, 200),
+            //         Color.fromRGBO(44, 169, 239, 1),
+            //         Color.fromRGBO(0, 205, 250, 1),
+            //         Color.fromRGBO(13, 255, 211, 1),
+            //         Color.fromRGBO(13, 255, 211, 1),
+            //       ],
+            //     ),
+            //     borderRadius: BorderRadius.circular(15),
+            //   ),
+            //   child: const Center(
+            //     child: BluredContainer(
+            //       height: 200,
+            //       width: 200,
+            //       child: Text(
+            //         'Dashboard',
+            //         style: TextStyle(
+            //           fontSize: 30,
+            //           fontWeight: FontWeight.bold,
+            //           color: Colors.white,
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

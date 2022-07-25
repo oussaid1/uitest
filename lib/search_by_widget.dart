@@ -1,17 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:riverpod/riverpod.dart';
 import 'package:uitest/extentions.dart';
 
 import 'glass_widgets.dart';
 import 'spinner.dart';
-
-final searchTextProvider = StateProvider<String>((ref) {
-  return '';
-});
-final selectedSearchCatProvider = StateProvider<String?>((ref) {
-  return 'Name';
-});
 
 class SearchByWidget extends StatefulWidget {
   final bool withCategory;

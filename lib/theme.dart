@@ -31,8 +31,9 @@ class MThemeData {
   static const secondaryColor = Color(0xff61E3AF);
 // black and white
   static const black = Color(0xFF000000);
-  static const almostBlackColorDark = Color(0xFF22282F);
+  static const almostBlackColor = Color(0xFF22282F);
   static const white = Color(0xFFFFFFFF);
+  static const almostWhiteColor = Color(0xFFF5F5F5);
   static const hintColor = Color(0x8D4A6474);
   static const errorColor = Color.fromARGB(255, 255, 0, 0);
 
@@ -44,7 +45,7 @@ class MThemeData {
     errorContainer: errorColor,
     onErrorContainer: Colors.red.shade50,
     secondary: secondaryColor,
-    onSecondaryContainer: hintColor,
+    onSecondaryContainer: almostBlackColor,
     surface: white,
     background: white,
     error: errorColor,
@@ -56,16 +57,21 @@ class MThemeData {
     brightness: Brightness.light,
   );
 
-  static ColorScheme darkColorScheme = const ColorScheme(
+  static ColorScheme darkColorScheme = ColorScheme(
     primary: primaryColor,
+    primaryContainer: primaryColor,
+    secondaryContainer: secondaryColor,
+    errorContainer: errorColor,
+    onErrorContainer: Colors.red.shade50,
     secondary: secondaryColor,
-    surface: black,
+    onSecondaryContainer: almostWhiteColor,
+    surface: almostBlackColor,
     background: black,
     error: errorColor,
     onPrimary: white,
-    onSecondary: white,
+    onSecondary: almostWhiteColor,
     onSurface: white,
-    onBackground: white,
+    onBackground: black,
     onError: Colors.white,
     brightness: Brightness.dark,
   );
@@ -126,6 +132,7 @@ class MThemeData {
 
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
+        // backgroundColor: Colors.transparent,
         iconTheme: const IconThemeData(color: hintColor),
         colorScheme: colorScheme,
         textTheme: _textTheme,
@@ -140,8 +147,8 @@ class MThemeData {
 
         ///#deprecated
         //accentColor: colorScheme.primary,
-        primaryColor: colorScheme.primary,
-        scaffoldBackgroundColor: colorScheme.background,
+
+        scaffoldBackgroundColor: colorScheme.surface,
         cardColor: colorScheme.background,
         dividerColor: colorScheme.onSurface,
 

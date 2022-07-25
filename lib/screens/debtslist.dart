@@ -5,8 +5,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:uitest/extentions.dart';
 import 'package:uitest/glass_widgets.dart';
@@ -22,6 +24,8 @@ import '../search_by_widget.dart';
 import '../stats_widget.dart';
 import '../theme.dart';
 import '../widgets/charts.dart';
+import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class DebtsView extends StatelessWidget {
   const DebtsView({Key? key}) : super(key: key);
@@ -334,6 +338,9 @@ class TopWidgetDebtsView extends StatelessWidget {
             height: 270,
             child: DueDebtsCard(),
           ),
+          Group116Widget(
+            debtdata: debtData,
+          ),
         ],
       ),
     );
@@ -354,12 +361,8 @@ class DebtListCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onTap(clientDebt),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Theme.of(context).colorScheme.surface,
-        ),
-        height: 50,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -422,8 +425,7 @@ class DebtListCard extends StatelessWidget {
                       ),
                       PriceNumberZone(
                         withDollarSign: true,
-                        // right: const SizedBox.shrink(), //const Text('left'),
-                        price: clientDebt.debtData.totalLeft,
+                        price: clientDebt.debtData.totalDebtAmount,
                         priceStyle:
                             Theme.of(context).textTheme.subtitle2!.copyWith(
                                   color: MThemeData.serviceColor,
@@ -665,34 +667,46 @@ class SimpleDebtCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppConstants.radius),
-          //   color: Theme.of(context).colorScheme.secondary,
           color: const Color.fromARGB(54, 255, 255, 255),
         ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(0),
-          dense: true,
-          leading: const VerticalDivider(
-            width: 0,
-            thickness: 8,
-            indent: 0,
-            color: MThemeData.productColor,
-          ),
-          title: Text(
-            '${debt.clientName}',
-            style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                color: Theme.of(context).colorScheme.onSecondaryContainer),
-          ),
-          trailing: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: PriceNumberZone(
-              withDollarSign: true,
-              right: const SizedBox.shrink(), //const Text('left'),
-              price: debt.amount,
-              priceStyle: Theme.of(context).textTheme.headline4!.copyWith(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 17,
+                  height: 40,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(AppConstants.radius),
+                      bottomLeft: Radius.circular(AppConstants.radius),
+                    ),
                     color: MThemeData.productColor,
                   ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '${debt.clientName}',
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                      color:
+                          Theme.of(context).colorScheme.onSecondaryContainer),
+                ),
+              ],
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: PriceNumberZone(
+                withDollarSign: true,
+                right: const SizedBox.shrink(), //const Text('left'),
+                price: debt.amount,
+                priceStyle: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: MThemeData.productColor,
+                    ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -742,15 +756,145 @@ class SimplePaymentListCard extends StatelessWidget {
                   ),
             ),
           ),
-          // subtitle: Text(
-          //   '',
-          //   //debt.deadLine.ddmmyyyy(),
-          //   style: Theme.of(context)
-          //       .textTheme
-          //       .subtitle2!
-          //       .copyWith(color: MThemeData.productColor),
-          // ),
         ),
+      ),
+    );
+  }
+}
+
+class Group116Widget extends StatelessWidget {
+  final DebtData debtdata;
+  const Group116Widget({
+    Key? key,
+    required this.debtdata,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    // Figma Flutter Generator Group116Widget - GROUP
+    return BluredContainer(
+      width: 420,
+      height: 156,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(FontAwesomeIcons.moneyBillTransfer),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 18.0, right: 18),
+                    child: Text(
+                      'Debts'.tr(),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                  ),
+                ],
+              ),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.more_vert_outlined,
+                  ))
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: LinearPercentIndicator(
+                  percent: debtdata.unitInterval,
+                  progressColor: MThemeData.expensesColor,
+                ),
+              ),
+              Text(
+                '${debtdata.totalDifferencePercentage}%',
+                style: Theme.of(context).textTheme.headline4!.copyWith(
+                      color: MThemeData.productColor,
+                    ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0, right: 18),
+                child: Column(
+                  children: [
+                    Text(
+                      'Highest'.tr(),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                    PriceNumberZone(
+                      price: debtdata.highestDebtAmount,
+                      withDollarSign: true,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 10),
+              Padding(
+                padding: const EdgeInsets.only(left: 18.0, right: 18),
+                child: Column(
+                  children: [
+                    Text(
+                      'Lowest'.tr(),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                    PriceNumberZone(
+                      price: debtdata.lowestDebtAmount,
+                      withDollarSign: true,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Divider(
+            height: 0,
+            thickness: 1,
+            color: Color.fromARGB(202, 255, 255, 255),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, top: 8, right: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(color: context.theme.onSecondaryContainer),
+                ),
+                PriceNumberZone(
+                  right: const SizedBox.shrink(),
+                  withDollarSign: true,
+                  price: debtdata.totalDebtAmount,
+                  priceStyle: context.textTheme.bodyLarge!.copyWith(
+                      //fontWeight: FontWeight.w100,
+                      // wordSpacing: 0.5,
+                      fontSize: 18,
+                      color: Colors.white.withOpacity(0.8)),
+                  // style: Theme.of(context)
+                  //     .textTheme
+                  //     .headline2!
+                  //     .copyWith(color: context.theme.primary),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

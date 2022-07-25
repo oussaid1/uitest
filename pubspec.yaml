@@ -80,6 +80,11 @@ flutter:
   assets:
     - assets/images/lightback.jpg
     - assets/images/lightback.png
+    - assets/images/background.jpg
+    - assets/icons/
+    - assets/svgs/
+    - assets/translations/
+
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

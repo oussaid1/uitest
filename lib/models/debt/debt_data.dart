@@ -87,7 +87,6 @@ class DebtData {
   // get difference between total unpaid expenses and total paid expenses in percentage
   int get totalDifferencePercentage {
     double total = 0;
-
     if (totalDebtAmount != 0) {
       total = (totalPaidDebtAmount * 100) / totalDebtAmount;
     }
@@ -102,18 +101,17 @@ class DebtData {
 
 // get unit Interval
   double get unitInterval {
-    double unit = 0.0;
-    if (totalDebtAmount > 0) {
-      unit = (totalDebtAmountLeft / 100);
-    }
-    if (unit < 0) {
-      unit = 0;
-    }
+    double unit = 0;
+    unit = totalDifferencePercentage / 100;
 
+    /// take only the first two digits after the decimal point
+    /// and round it to the nearest integer
+    unit = unit.toPrecision(2);
     if (unit > 1) {
       unit = 1;
+    } else if (unit < 0) {
+      unit = 0;
     }
-
     return unit;
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////

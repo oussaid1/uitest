@@ -149,7 +149,7 @@ extension LowerCaseList on List<String> {
 /// extension on DateTime to get a string in the format dd/mm/yyyy
 extension DateTimeExt on DateTime {
   String ddmmyyyy() {
-    return '$day/$month/$year';
+    return DateFormat("dd/MM/yy").format(this);
   }
 }
 
