@@ -89,4 +89,36 @@ class SuplierModel {
         email.hashCode ^
         location.hashCode;
   }
+
+  /// fake data
+  static List<SuplierModel> fakeData = [
+    SuplierModel(
+      id: '1',
+      name: 'Suplier 1',
+      phone: '0123456789',
+      email: ' @gmail.com',
+      location: laayoune,
+    ),
+    SuplierModel(
+      id: '2',
+      name: 'Suplier 2',
+      phone: '0123456789',
+      email: ' @gmail.com',
+      location: laayoune,
+    ),
+    SuplierModel(
+      id: '3',
+      name: 'Suplier 3',
+      phone: '0123456789',
+      email: ' @gmail.com',
+      location: laayoune,
+    ),
+    SuplierModel(
+      id: '4',
+      name: 'Suplier 4',
+      phone: '0123456789',
+      email: ' @gmail.com',
+      location: laayoune,
+    ),
+  ];
 }

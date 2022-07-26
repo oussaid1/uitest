@@ -45,6 +45,7 @@ dependencies:
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
+  flutter_rating_bar: ^4.0.1
   flutter_riverpod: ^1.0.4
   flutter_slidable: ^2.0.0
   flutter_svg: ^1.1.0
@@ -78,14 +79,13 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/lightback.jpg
-    - assets/images/lightback.png
-    - assets/images/background.jpg
+    # - assets/images/lightback.jpg
+    # - assets/images/lightback.png
+    # - assets/images/background.jpg
+    - assets/images/
     - assets/icons/
     - assets/svgs/
     - assets/translations/
-
-    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

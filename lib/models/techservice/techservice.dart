@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models.dart';
 
-
 part 'techservices_data.dart';
 
 class TechServiceModel extends ProductModel {
@@ -30,7 +29,6 @@ class TechServiceModel extends ProductModel {
     double? priceIn,
     double? priceOut,
     String? suplier,
-    String? availability,
   }) : super(
           pId: id,
           productName: name ?? '',

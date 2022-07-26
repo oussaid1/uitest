@@ -66,12 +66,12 @@ class BluredContainer extends StatelessWidget {
   const BluredContainer({
     Key? key,
     required this.child,
-    this.start = 0.15,
-    this.end = 0.15,
+    this.start = 0.4,
+    this.end = 0.4,
     this.width,
     this.height,
     this.margin,
-    this.borderColorOpacity = 0.1,
+    this.borderColorOpacity = 0.2,
   }) : super(key: key);
 
   @override
@@ -80,7 +80,7 @@ class BluredContainer extends StatelessWidget {
       borderRadius:
           const BorderRadius.all(Radius.circular(AppConstants.radius)),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 42, sigmaY: 42),
+        filter: ImageFilter.blur(sigmaX: 35, sigmaY: 35),
         child: Container(
           // margin: margin,
           width: width ?? 420, // MediaQuery.of(context).size.width,
@@ -110,6 +110,7 @@ class BluredContainer extends StatelessWidget {
 
 class AppConstants {
   static const double radius = 6;
+  static const double borderRadius = 6;
 
   static Color whiteOpacity = Color.fromARGB(181, 255, 255, 255);
 }

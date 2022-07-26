@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -18,14 +17,9 @@ import '../models/debt/debt.dart';
 import '../models/debt/debtsviewmodel.dart';
 import '../models/payment/payment.dart';
 import '../models/product/product.dart';
-import '../models/product_data.dart';
-import '../popups.dart';
 import '../search_by_widget.dart';
 import '../stats_widget.dart';
 import '../theme.dart';
-import '../widgets/charts.dart';
-import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class DebtsView extends StatelessWidget {
   const DebtsView({Key? key}) : super(key: key);
@@ -688,7 +682,7 @@ class SimpleDebtCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '${debt.clientName}',
+                  '${debt.clientId}',
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color:
                           Theme.of(context).colorScheme.onSecondaryContainer),
@@ -741,7 +735,7 @@ class SimplePaymentListCard extends StatelessWidget {
             color: MThemeData.serviceColor,
           ),
           title: Text(
-            '${payment.clientName}',
+            '${payment.clientId}',
             style: Theme.of(context).textTheme.bodyText2!.copyWith(
                 color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),

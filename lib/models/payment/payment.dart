@@ -11,14 +11,12 @@ class PaymentModel {
   double amount;
   DateTime date;
   String? description;
-  String? clientName;
   PaymentModel({
     this.id,
     required this.clientId,
     required this.amount,
     required this.date,
     this.description,
-    this.clientName,
   });
 
   PaymentModel copyWith({
@@ -35,7 +33,6 @@ class PaymentModel {
       amount: amount ?? this.amount,
       date: date ?? this.date,
       description: description ?? this.description,
-      clientName: clientName ?? this.clientName,
     );
   }
 
@@ -45,7 +42,6 @@ class PaymentModel {
       'amount': amount,
       'date': date,
       'description': description,
-      'clientName': clientName,
     };
   }
 
@@ -57,7 +53,6 @@ class PaymentModel {
       amount: map['amount'] ?? 0.0,
       date: date.toDate(),
       description: map['description'] ?? '',
-      clientName: map['clientName'] ?? '',
     );
 
     return payment;
@@ -70,7 +65,7 @@ class PaymentModel {
 
   @override
   String toString() {
-    return 'Payment(id: $id, clientId: $clientId, amount: $amount, date: $date, description: $description, clientName: $clientName)';
+    return 'Payment(id: $id, clientId: $clientId, amount: $amount, date: $date, description: $description,)';
   }
 
   @override
@@ -82,8 +77,7 @@ class PaymentModel {
         other.clientId == clientId &&
         other.amount == amount &&
         other.date == date &&
-        other.description == description &&
-        other.clientName == clientName;
+        other.description == description;
   }
 
   @override
@@ -92,8 +86,7 @@ class PaymentModel {
         clientId.hashCode ^
         amount.hashCode ^
         date.hashCode ^
-        description.hashCode ^
-        clientName.hashCode;
+        description.hashCode;
   }
 
   /// fake payments
@@ -105,7 +98,6 @@ class PaymentModel {
         amount: Random().nextInt(1000).toDouble(),
         date: DateTime.now(),
         id: i.toString(),
-        clientName: 'client $i',
       ));
     }
     return list;

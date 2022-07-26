@@ -430,7 +430,7 @@ class ProductModel {
       list.add(ProductModel(
         pId: 'id$j',
         barcode: 'barcode$j',
-        productName: 'productName$j',
+        productName: 'product$j',
         description: 'description$j',
         category: 'category$j',
         dateIn: DateTime.now().add(Duration(days: j + 15)),

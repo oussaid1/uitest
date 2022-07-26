@@ -6,17 +6,16 @@ class FilteredPayments {
 
   List<String> get distinctClients {
     List<String> clients = [];
-    for (var item in payments) {
-      clients.add(item.clientName!);
-    }
+    // for (var item in payments) {
+    //   clients.add(item.!);
+    // }
     return clients;
   }
 
   List<PaymentModel> paymentsByClient(List<PaymentModel> payments) {
     List<PaymentModel> payments = [];
     for (var item in distinctClients) {
-      payments =
-          payments.where((element) => element.clientName == item).toList();
+      payments = payments.where((element) => element.clientId == item).toList();
     }
     return payments;
   }

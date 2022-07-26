@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
-
 import '../data_table.dart';
 import '../glass_widgets.dart';
 import '../spinner.dart';
@@ -76,13 +75,6 @@ class _HomePageState extends State<HomePage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Are you sure you want to delete $itemName?'),
-              SelectOrAddNewDropDown(
-                list: items,
-                onSaved: (value) {
-                  toast('onChanged: $value');
-                },
-                initialItem: "Egg",
-              ),
               SelectDate(
                 firstDate: DateTime.now().add(const Duration(days: 10)),
                 onDateSelected: (DateTime date) {},

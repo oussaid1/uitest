@@ -39,6 +39,15 @@ class AuthPageState extends State<AuthPage> {
   bool _canRegister = false;
 
   final _pageController = PageController(initialPage: 0);
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return const App();
+      }));
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +81,17 @@ class AuthPageState extends State<AuthPage> {
       height: MediaQuery.of(context).size.height,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
-        color: MThemeData.secondaryColor,
+        image: DecorationImage(
+          colorFilter:
+              ColorFilter.mode(Color.fromARGB(43, 0, 0, 0), BlendMode.darken),
+          image: AssetImage(
+            'assets/images/background1.jpg',
+            // bundle: AssetBundle,/// TODO: fix this, read docs
+          ),
+          fit: BoxFit.cover,
+        ),
+        color: Colors.transparent,
+        //color: MThemeData.secondaryColor,
       ),
       //color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
@@ -225,7 +244,17 @@ class AuthPageState extends State<AuthPage> {
   buildLefttSide(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: MThemeData.primaryColor,
+        image: DecorationImage(
+          // colorFilter:
+          //     ColorFilter.mode(Color.fromARGB(43, 0, 0, 0), BlendMode.darken),
+          image: AssetImage(
+            'assets/images/background1.jpg',
+            // bundle: AssetBundle,/// TODO: fix this, read docs
+          ),
+          fit: BoxFit.cover,
+        ),
+        //color: MThemeData.primaryColor,
+        color: Colors.transparent,
       ),
       height: MediaQuery.of(context).size.height,
       // color: Theme.of(context).colorScheme.primary,

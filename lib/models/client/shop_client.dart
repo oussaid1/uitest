@@ -11,18 +11,16 @@ class ShopClientModel {
   String? clientName;
   String? phone;
   String? email;
-  int stars = 1;
+  double stars = 1;
   List<SaleModel> sales = [];
   List<DebtModel> debts = [];
   ShopClientModel(
       {this.id, this.clientName, this.phone, this.email, this.stars = 1});
-  static get client {
-    return ShopClientModel(
-        id: '1',
-        clientName: 'Cliente',
-        phone: '123456789',
-        email: 'client@gmail.com');
-  }
+  static ShopClientModel client = ShopClientModel(
+      id: '1',
+      clientName: 'Cliente',
+      phone: '123456789',
+      email: 'client@gmail.com');
 
   ShopClientModel copyWith({
     String? id,

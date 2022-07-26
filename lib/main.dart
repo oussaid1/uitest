@@ -7,6 +7,7 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:uitest/blocs/bloc/date_filter_bloc.dart';
 import 'package:uitest/screens/splash.dart';
 import 'package:uitest/theme.dart';
+import 'package:uitest/widgets/addstuff_fab.dart';
 import 'models/models.dart';
 import 'models/product_data.dart';
 import 'screens/dashboard.dart';
@@ -42,12 +43,12 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           image: DecorationImage(
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.2), BlendMode.darken),
-            image: const AssetImage(
-              'assets/images/background.jpg',
+            // colorFilter:
+            //     ColorFilter.mode(Color.fromARGB(43, 0, 0, 0), BlendMode.darken),
+            image: AssetImage(
+              'assets/images/background1.jpg',
               // bundle: AssetBundle,/// TODO: fix this, read docs
             ),
             fit: BoxFit.cover,
@@ -166,8 +167,16 @@ class _AppState extends State<App> {
               length: 3,
               child: Scaffold(
                 backgroundColor: Colors.transparent,
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.endDocked,
+                floatingActionButton: const Padding(
+                  padding: EdgeInsets.only(bottom: 80.0),
+                  child: SizedBox(
+                    width: 120,
+                    child: AddStuffWidget(),
+                  ),
+                ),
                 appBar: AppBar(
-                  //title: const Text('Flutter Riverpod'),
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   actions: [

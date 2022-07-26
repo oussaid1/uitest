@@ -26,9 +26,9 @@ class MThemeData {
   /// static const primaryColor = Color(0xFF185A9D);
   ///static const secondaryColor = Color(0xFF43CEA2);
   ////////////////////
-  static const accentColor = Color(0xFFEAB93C);
-  static const primaryColor = Color.fromARGB(255, 25, 66, 179);
-  static const secondaryColor = Color(0xff61E3AF);
+  static const accentColor = Color(0xFF038C8C);
+  static const primaryColor = Color(0xFF012326);
+  static const secondaryColor = Color(0xff025159);
 // black and white
   static const black = Color(0xFF000000);
   static const almostBlackColor = Color(0xFF22282F);
@@ -91,7 +91,7 @@ class MThemeData {
   static final ButtonStyle raisedButtonStyleCancel = TextButton.styleFrom(
     textStyle: _textTheme.button!
         .copyWith(color: const Color.fromARGB(255, 0, 82, 206)),
-    minimumSize: const Size(88, 36),
+    minimumSize: const Size(120, 40),
     elevation: 0,
     backgroundColor: Colors.transparent,
     //  foregroundColor: Colors.white.withOpacity(0.5),
@@ -106,7 +106,7 @@ class MThemeData {
   static final ButtonStyle raisedButtonStyleSave = TextButton.styleFrom(
     textStyle: _textTheme.button!
         .copyWith(color: const Color.fromARGB(255, 0, 82, 206)),
-    minimumSize: const Size(88, 36),
+    minimumSize: const Size(120, 40),
     elevation: 0,
     backgroundColor: const Color.fromARGB(195, 3, 187, 162),
     // foregroundColor: MThemeData.white,

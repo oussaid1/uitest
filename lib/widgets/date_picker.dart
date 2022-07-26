@@ -63,6 +63,8 @@ class _SelectDateState extends State<SelectDate> {
       onTap: () {
         selectDate(context);
       },
+      enableInteractiveSelection: true,
+      readOnly: true,
       decoration: InputDecoration(
         hintText: 'Select Date',
         border: OutlineInputBorder(

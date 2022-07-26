@@ -18,20 +18,17 @@ enum DebtFilter {
 
 class DebtModel {
   String? id;
-  String? productName;
-  String? clientName;
   String? clientId;
-  String? type; // product or service
   DateTime timeStamp = DateTime.now();
   double amount;
-  double paidAmount;
+  //double paidAmount;
   DateTime deadLine = DateTime.now();
 
   /// get total amount of debt left to pay
-  double get totalAmountLeft => amount - paidAmount;
+  //double get totalAmountLeft => amount - paidAmount;
 
   /// get is fully paid
-  bool get isFullyPaid => totalAmountLeft == 0;
+  // bool get isFullyPaid => totalAmountLeft == 0;
   // get howmany days after deadline
   int get daysOverdue {
     return DateTime.now().difference(deadLine).inDays;
@@ -44,12 +41,8 @@ class DebtModel {
 
   DebtModel({
     this.id,
-    this.productName,
     this.clientId,
-    this.type,
-    this.clientName,
     required this.amount,
-    required this.paidAmount,
     required this.timeStamp,
     required this.deadLine,
   });
@@ -66,12 +59,8 @@ class DebtModel {
   }) {
     return DebtModel(
       id: id ?? this.id,
-      productName: productName ?? this.productName,
       clientId: clientId ?? this.clientId,
-      clientName: clientName ?? this.clientName,
-      type: type ?? this.type,
       amount: amount ?? this.amount,
-      paidAmount: paidAmount ?? this.paidAmount,
       timeStamp: timeStamp,
       deadLine: deadLine,
     );
@@ -79,12 +68,8 @@ class DebtModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'productName': productName,
       'clientId': clientId,
-      'clientName': clientName,
-      'type': type,
       'amount': amount,
-      'paid': paidAmount,
       'dueDate': deadLine,
       'timeStamp': timeStamp
     };
@@ -95,15 +80,10 @@ class DebtModel {
     Timestamp dueDatem = map['dueDate'];
     var date = timeStamp.toDate();
     var dueDate = (dueDatem.toDate());
-
     DebtModel debt = DebtModel(
       id: map.id,
-      productName: map['productName'] ?? '',
       clientId: map['clientId'] ?? '',
-      clientName: map['clientName'] ?? '',
-      type: map['type'] ?? '',
       amount: map['amount'] ?? 0,
-      paidAmount: map['paid'] ?? 0,
       timeStamp: date,
       deadLine: dueDate,
     );
@@ -118,7 +98,7 @@ class DebtModel {
 
   @override
   String toString() {
-    return 'Debt(id: $id, productName: $productName,clientId:$clientId, clientName:$clientName , type: $type, amount: $amount, paid: $paidAmount, dueDate:$deadLine,timeStamp:$timeStamp)';
+    return 'DebtModel(id: $id, clientId: $clientId, amount: $amount, timeStamp: $timeStamp, deadLine: $deadLine)';
   }
 
   @override
@@ -126,28 +106,21 @@ class DebtModel {
     if (identical(this, other)) return true;
 
     return other is DebtModel &&
-        other.id == id &&
-        other.productName == productName &&
-        other.clientId == clientId &&
-        other.clientName == clientName &&
-        other.type == type &&
-        other.amount == amount &&
-        other.deadLine == deadLine &&
-        other.timeStamp == timeStamp &&
-        other.paidAmount == paidAmount;
+        runtimeType == other.runtimeType &&
+        id == other.id &&
+        clientId == other.clientId &&
+        amount == other.amount &&
+        timeStamp == other.timeStamp &&
+        deadLine == other.deadLine;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        productName.hashCode ^
         clientId.hashCode ^
-        clientName.hashCode ^
-        type.hashCode ^
         amount.hashCode ^
-        paidAmount.hashCode ^
-        deadLine.hashCode ^
-        timeStamp.hashCode;
+        timeStamp.hashCode ^
+        deadLine.hashCode;
   }
 
   /// fake debts
@@ -157,12 +130,8 @@ class DebtModel {
       debts.add(
         DebtModel(
           id: '1',
-          productName: 'product $i',
           clientId: '$i',
-          clientName: 'client $i',
-          type: 'product',
           amount: Random().nextInt(100000).toDouble(),
-          paidAmount: 0,
           timeStamp: DateTime.now()..add(Duration(days: -i)),
           deadLine: DateTime.now().add(const Duration(days: 30)),
         ),
