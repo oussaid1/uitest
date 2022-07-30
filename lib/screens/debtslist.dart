@@ -672,17 +672,17 @@ class SimpleDebtCard extends StatelessWidget {
                 Container(
                   width: 17,
                   height: 40,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(AppConstants.radius),
                       bottomLeft: Radius.circular(AppConstants.radius),
                     ),
-                    color: MThemeData.productColor,
+                    color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '${debt.clientId}',
+                  debt.timeStamp.ddmmyyyy(),
                   style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color:
                           Theme.of(context).colorScheme.onSecondaryContainer),
@@ -696,7 +696,7 @@ class SimpleDebtCard extends StatelessWidget {
                 right: const SizedBox.shrink(), //const Text('left'),
                 price: debt.amount,
                 priceStyle: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: MThemeData.productColor,
+                      color: Theme.of(context).colorScheme.onSecondary,
                     ),
               ),
             ),
@@ -735,7 +735,7 @@ class SimplePaymentListCard extends StatelessWidget {
             color: MThemeData.serviceColor,
           ),
           title: Text(
-            '${payment.clientId}',
+            payment.clientId,
             style: Theme.of(context).textTheme.bodyText2!.copyWith(
                 color: Theme.of(context).colorScheme.onSecondaryContainer),
           ),

@@ -100,51 +100,39 @@ class AddOrEditProductState extends State<AddOrEditProduct> {
   }
 
   buildFields(BuildContext context, List<String> suplierList) {
-    return Container(
-      margin: const EdgeInsets.all(8),
-      width: Responsive.isDesktop(context) ? 600 : context.width - 10,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(6),
-        color: Theme.of(context).dialogBackgroundColor,
-        // gradient: MThemeData.gradient1,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            //buildBarcode(ref),
-            //const SizedBox(height: 8),
-            Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  _buildProductName(),
-                  const SizedBox(height: 20),
-                  _buildPriceIn(),
-                  const SizedBox(height: 20),
-                  _buildPriceOut(),
-                  const SizedBox(height: 20),
-                  _buildQuantity(context),
-                  const SizedBox(height: 20),
-                  _buildCategory(context, []),
-                  const SizedBox(height: 20),
-                  _buildDate(),
-                  const SizedBox(height: 20),
-                  _buildSuplier(context),
-                  const SizedBox(height: 20),
-                  _buildDescription(),
-                  const SizedBox(height: 20),
-                ],
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Form(
+            key: formKey,
+            child: Column(
+              children: [
+                _buildProductName(),
+                const SizedBox(height: 20),
+                _buildPriceIn(),
+                const SizedBox(height: 20),
+                _buildPriceOut(),
+                const SizedBox(height: 20),
+                _buildQuantity(context),
+                const SizedBox(height: 20),
+                _buildCategory(context, []),
+                const SizedBox(height: 20),
+                _buildDate(),
+                const SizedBox(height: 20),
+                _buildSuplier(context),
+                const SizedBox(height: 20),
+                _buildDescription(),
+                const SizedBox(height: 20),
+              ],
             ),
+          ),
 
-            _buildSaveButton(context),
-            const SizedBox(height: 100) //but
-          ],
-        ),
+          _buildSaveButton(context),
+          const SizedBox(height: 40) //but
+        ],
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:uitest/models/expenses/expenses.dart';
 
 extension Neumorphism on Widget {
   addNeumorphism({
@@ -142,6 +143,7 @@ extension LowerCaseList on List<String> {
     for (int i = 0; i < length; i++) {
       this[i] = this[i].toLowerCase();
     }
+
     return this;
   }
 }
@@ -163,3 +165,23 @@ extension Ex on double {
   double toPrecision(int digitsAfter) =>
       double.parse(toStringAsFixed(digitsAfter));
 }
+
+/// an extension on enum to get the string values of the enum as a list of strings
+// extension EnumExt on T<Enum> {
+//   List<String> get list {
+//  return this.values.map((e) => e.name).toList();
+//   }
+// }
+
+// /// an extension on String to get the enum value of the string
+// extension EnumParser on String {
+//   ExpenseCategory toExpenseCategory() {
+//     switch (split('.').first) {
+//       case 'electricity':
+//         return ExpenseCategory.electricity;
+//       default:
+//         return ExpenseCategory.other;
+//     }
+//   }
+  
+// }

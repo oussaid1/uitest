@@ -36,7 +36,9 @@ class PriceNumberZone extends StatelessWidget {
                     child: Text(
                       currency.toString(),
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                            fontSize: signSize ?? 14,
+                            fontSize: signSize ?? 12,
+                            color: priceStyle?.color ??
+                                context.theme.onSecondaryContainer,
                           ),
                     ),
                   );

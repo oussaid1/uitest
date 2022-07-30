@@ -14,7 +14,7 @@ class ExpenseModel {
   DateTime deadLine;
   double amount;
   double amountPaid;
-  ExpenseCategory expenseCategory;
+  String expenseCategory;
   bool get isPaid => amountPaid == amount;
   ExpenseModel({
     this.id,
@@ -53,7 +53,7 @@ class ExpenseModel {
       'deadLine': deadLine,
       'amount': amount,
       'amountPaid': amountPaid,
-      'expenseCategory': expenseCategory.name,
+      'expenseCategory': expenseCategory,
     };
   }
 
@@ -65,7 +65,7 @@ class ExpenseModel {
       deadLine: map['deadLine'].toDate(),
       amount: map['amount'],
       amountPaid: map['amountPaid'],
-      expenseCategory: map['expenseCategory'],
+      expenseCategory: map['expenseCategory'].toString().split('.').last,
     );
   }
 

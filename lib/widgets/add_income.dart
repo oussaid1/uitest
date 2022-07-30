@@ -1,30 +1,30 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../models/income/income.dart';
 import '../theme.dart';
 import 'date_picker.dart';
 
-class AddIncome extends ConsumerStatefulWidget {
+class AddIncome extends StatefulWidget {
   const AddIncome({Key? key, this.income}) : super(key: key);
   final IncomeModel? income;
   @override
-  ConsumerState<AddIncome> createState() => AddIncomeState();
+  State<AddIncome> createState() => AddIncomeState();
 }
 
-class AddIncomeState extends ConsumerState<AddIncome> {
-  final GlobalKey<FormState> expenseformKey = GlobalKey<FormState>();
+class AddIncomeState extends State<AddIncome> {
+  final GlobalKey<FormState> incomeformKey = GlobalKey<FormState>();
   final TextEditingController expenseNameController = TextEditingController();
-  final TextEditingController sourceController = TextEditingController();
+  final TextEditingController sourceNameController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   DateTime date = DateTime.now();
-
+  bool canSave = false, isUpdate = false;
   void clear() {
     expenseNameController.clear();
-    sourceController.clear();
+    sourceNameController.clear();
     amountController.clear();
   }
 
@@ -32,17 +32,20 @@ class AddIncomeState extends ConsumerState<AddIncome> {
   void initState() {
     super.initState();
     if (widget.income != null) {
+      isUpdate = true;
       expenseNameController.text = widget.income!.name;
-      sourceController.text = widget.income!.source;
+      sourceNameController.text = widget.income!.source;
       amountController.text = widget.income!.amount.toString();
+      date = widget.income!.date;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Form(
-        key: expenseformKey,
+    return Form(
+      key: incomeformKey,
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
             const SizedBox(height: 20),
@@ -53,84 +56,62 @@ class AddIncomeState extends ConsumerState<AddIncome> {
             buildDate(),
             const SizedBox(height: 20),
             buildSourceName(),
-            const SizedBox(height: 20),
-            buildSaveButton(ref, context),
+            const SizedBox(height: 40),
+            buildSaveButton(context),
           ],
         ),
       ),
     );
   }
 
-  Row buildSaveButton(WidgetRef ref, BuildContext context) {
-    return widget.income != null
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                  style: MThemeData.raisedButtonStyleSave,
-                  child: Text(
-                    'Update'.tr(),
-                  ),
-                  onPressed: () {
-                    // var selectedShopClient = ref.watch(selectedShopClient);
-                    // final IncomeModel income = IncomeModel(
-                    //   id: widget.income!.id,
-                    //   source: widget.income!.source,
-                    //   date: date,
-                    //   name: expenseNameController.text.trim(),
-                    //   amount: double.parse(amountController.text.trim()),
-                    // );
-                    // if (expenseformKey.currentState!.validate()) {
-                    //   GetIt.I<IncomeBloc>().add(UpdateIncomeEvent(income));
-                    //   Navigator.pop(context);
-                    // }
-                  }),
-              ElevatedButton(
-                style: MThemeData.raisedButtonStyleCancel,
-                child: Text(
-                  'Cancel'.tr(),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                  style: MThemeData.raisedButtonStyleSave,
-                  child: Text(
-                    'Save'.tr(),
-                  ),
-                  onPressed: () {
-                    if (expenseformKey.currentState!.validate()) {
-                      final income = IncomeModel(
+  Row buildSaveButton(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ElevatedButton(
+            style: MThemeData.raisedButtonStyleSave,
+            onPressed: !canSave
+                ? null
+                : () {
+                    if (incomeformKey.currentState!.validate()) {
+                      setState(() {
+                        canSave = false;
+                      });
+                      canSave = false;
+                      final IncomeModel income = IncomeModel(
+                        id: isUpdate ? widget.income!.id : null,
+                        source: sourceNameController.text.trim(),
+                        date: date,
                         name: expenseNameController.text.trim(),
                         amount: double.parse(amountController.text.trim()),
-                        date: date,
-                        source: sourceController.text.trim(),
                       );
-                      // GetIt.I<IncomeBloc>().add(UpdateIncomeEvent(income));
+                      log(income.toString());
+                      //GetIt.I<IncomeBloc>().add(widget.income != null? UpdateIncomeEvent(income): AddIncomeEvent(income));
+                      //Navigator.pop(context);
+                      setState(() {
+                        canSave = true;
+                      });
                     }
-                  }),
-              ElevatedButton(
-                style: MThemeData.raisedButtonStyleCancel,
-                child: Text(
-                  'Cancel'.tr(),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
+                  },
+            child: Text(
+              isUpdate ? 'edit'.tr() : 'add'.tr(),
+            )),
+        ElevatedButton(
+          style: MThemeData.raisedButtonStyleCancel,
+          child: Text(
+            'Cancel'.tr(),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
   }
 
   TextFormField buildSourceName() {
     return TextFormField(
-      controller: sourceController,
+      controller: sourceNameController,
       validator: (text) {
         if (text!.trim().isEmpty) {
           return "error".tr();
@@ -138,7 +119,9 @@ class AddIncomeState extends ConsumerState<AddIncome> {
         return null;
       },
       textAlign: TextAlign.center,
+      maxLength: 20,
       decoration: InputDecoration(
+        counterText: '',
         labelText: 'from'.tr(),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
@@ -154,35 +137,12 @@ class AddIncomeState extends ConsumerState<AddIncome> {
   }
 
   Widget buildDate() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 8.0,
-            top: 8,
-          ),
-          child: Text(
-            'Date'.tr(),
-            style: Theme.of(context).textTheme.subtitle2!,
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(left: 4, right: 4),
-          decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).bottomAppBarColor),
-              borderRadius: BorderRadius.circular(6)),
-          height: 50,
-          width: 240,
-          child: SelectDate(
-            onDateSelected: (DateTime date) {
-              setState(() {
-                this.date = date;
-              });
-            },
-          ),
-        ),
-      ],
+    return SelectDate(
+      onDateSelected: (DateTime pickedDate) {
+        setState(() {
+          date = pickedDate;
+        });
+      },
     );
   }
 
@@ -200,13 +160,15 @@ class AddIncomeState extends ConsumerState<AddIncome> {
       ],
       textAlign: TextAlign.center,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      maxLength: 10,
       decoration: InputDecoration(
+        counterText: '',
         labelText: 'Amount'.tr(),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: const BorderSide(),
         ),
-        hintText: '1434 dh',
+        hintText: '\$1434',
         hintStyle: Theme.of(context).textTheme.subtitle2!,
         contentPadding: const EdgeInsets.only(top: 4),
         prefixIcon: const Icon(Icons.monetization_on),
@@ -224,7 +186,18 @@ class AddIncomeState extends ConsumerState<AddIncome> {
         }
         return null;
       },
+      onChanged: (text) {
+        setState(() {
+          if (text.trim().isNotEmpty &&
+              expenseNameController.text.trim().isNotEmpty) {
+            canSave = true;
+          }
+        });
+      },
+      textAlign: TextAlign.center,
+      maxLength: 20,
       decoration: InputDecoration(
+        counterText: '',
         labelText: 'Income-Name'.tr(),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),

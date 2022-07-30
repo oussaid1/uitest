@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,13 +18,12 @@ class AddExpense extends ConsumerStatefulWidget {
 
 class AddExpenseState extends ConsumerState<AddExpense> {
   final expenseformKey = GlobalKey<FormState>();
-  final expenseformKey2 = GlobalKey<FormState>();
   final TextEditingController expenseNameController = TextEditingController();
   final TextEditingController amuontPaidController = TextEditingController();
   final TextEditingController amountController = TextEditingController();
   DateTime date = DateTime.now();
   DateTime dueDate = DateTime.now();
-  String? expenseCategory;
+  String expenseCategory = 'other';
   void clear() {
     expenseNameController.clear();
     amuontPaidController.clear();
@@ -35,6 +36,8 @@ class AddExpenseState extends ConsumerState<AddExpense> {
       expenseNameController.text = widget.expense!.name;
       amuontPaidController.text = widget.expense!.amountPaid.toString();
       amountController.text = widget.expense!.amount.toString();
+      date = widget.expense!.date;
+      dueDate = widget.expense!.deadLine;
     }
 
     super.initState();
@@ -45,23 +48,26 @@ class AddExpenseState extends ConsumerState<AddExpense> {
     final List<String> categoriesList = [];
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          //  const SizedBox(height: 20),
-          buildCategory(context, categoriesList),
-          const SizedBox(height: 20),
-          buildProductName(),
-          const SizedBox(height: 20),
-          buildDueAmount(),
-          const SizedBox(height: 20),
-          buildDate(),
-          const SizedBox(height: 20),
-          buildPaidAmount(),
-          const SizedBox(height: 20),
-          buildDueDate(),
-          const SizedBox(height: 40),
-          buildSaveButton(ref, context),
-        ],
+      child: Form(
+        key: expenseformKey,
+        child: Column(
+          children: [
+            //  const SizedBox(height: 20),
+            buildCategory(context, categoriesList),
+            const SizedBox(height: 20),
+            buildProductName(),
+            const SizedBox(height: 20),
+            buildDueAmount(),
+            const SizedBox(height: 20),
+            buildDate(),
+            const SizedBox(height: 20),
+            buildPaidAmount(),
+            const SizedBox(height: 20),
+            buildDueDate(),
+            const SizedBox(height: 40),
+            buildSaveButton(ref, context),
+          ],
+        ),
       ),
     );
   }
@@ -77,21 +83,16 @@ class AddExpenseState extends ConsumerState<AddExpense> {
             ),
             onPressed: () {
               if (expenseformKey.currentState!.validate()) {
-                // final ExpenseModel expense = ExpenseModel(
-                //   date: ref.watch(pickedDateTime.state).state,
-                //   id: widget.expense!.id,
-                //   name: expenseNameController.text.trim(),
-                //   amount: double.parse(amountController.text.trim()),
-                //   amountPaid:
-                //       double.parse(amuontPaidController.text.trim()),
-                //   deadLine: ref.watch(pickedDueDateTime.state).state,
-                //   expenseCategory: ref
-                //       .watch(selectedItemProvider.state)
-                //       .state
-                //       .toString()
-                //       .toExpenseCategory(),
-                // );
-
+                final ExpenseModel expense = ExpenseModel(
+                  id: widget.expense == null ? null : widget.expense!.id,
+                  date: date,
+                  name: expenseNameController.text.trim(),
+                  amount: double.parse(amountController.text.trim()),
+                  amountPaid: double.parse(amuontPaidController.text.trim()),
+                  deadLine: dueDate,
+                  expenseCategory: expenseCategory,
+                );
+                log('expense: $expense');
               }
             }),
         ElevatedButton(
@@ -158,70 +159,66 @@ class AddExpenseState extends ConsumerState<AddExpense> {
     );
   }
 
-  Form buildDueAmount() {
-    return Form(
-      key: expenseformKey,
-      child: TextFormField(
-        controller: amountController,
-        validator: (text) {
-          if (text!.trim().isEmpty) {
-            return "error".tr();
-          }
-          return null;
-        },
-        inputFormatters: [
-          FilteringTextInputFormatter.allow(RegExp('[0-9.]+')),
-        ],
-        textAlign: TextAlign.center,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        maxLength: 10,
-        decoration: InputDecoration(
-          counterText: '',
-          labelText: 'Amount-Due'.tr(),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6.0),
-            borderSide: const BorderSide(),
-          ),
-          hintText: '\$1434',
-          hintStyle: Theme.of(context).textTheme.subtitle2!,
-          contentPadding: const EdgeInsets.only(top: 4),
-          prefixIcon: const Icon(Icons.monetization_on),
-          filled: true,
+  buildDueAmount() {
+    return TextFormField(
+      controller: amountController,
+      validator: (text) {
+        if (text!.trim().isEmpty) {
+          return "error".tr();
+        }
+        return null;
+      },
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp('[0-9.]+')),
+      ],
+      textAlign: TextAlign.center,
+      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+      maxLength: 10,
+      decoration: InputDecoration(
+        counterText: '',
+        labelText: 'Amount-Due'.tr(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6.0),
+          borderSide: const BorderSide(),
         ),
+        hintText: '\$1434',
+        hintStyle: Theme.of(context).textTheme.subtitle2!,
+        contentPadding: const EdgeInsets.only(top: 4),
+        prefixIcon: const Icon(Icons.monetization_on),
+        filled: true,
       ),
     );
   }
 
-  Form buildProductName() {
-    return Form(
-      key: expenseformKey2,
-      child: TextFormField(
-        controller: expenseNameController,
-        validator: (text) {
-          if (text!.trim().isEmpty) {
-            return "error".tr();
-          }
-          return null;
-        },
-        maxLength: 20,
-        decoration: InputDecoration(
-          labelText: 'Expense-Name'.tr(),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(6.0),
-            borderSide: const BorderSide(),
-          ),
-          hintText: 'expense name',
-          hintStyle: Theme.of(context).textTheme.subtitle2!,
-          contentPadding: const EdgeInsets.only(top: 4),
-          prefixIcon: const Icon(Icons.shopping_bag_outlined),
-          filled: true,
+  buildProductName() {
+    return TextFormField(
+      controller: expenseNameController,
+      validator: (text) {
+        if (text!.trim().isEmpty) {
+          return "error".tr();
+        }
+        return null;
+      },
+      maxLength: 20,
+      decoration: InputDecoration(
+        counterText: '',
+        labelText: 'Expense-Name'.tr(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(6.0),
+          borderSide: const BorderSide(),
         ),
+        hintText: 'expense name',
+        hintStyle: Theme.of(context).textTheme.subtitle2!,
+        contentPadding: const EdgeInsets.only(top: 4),
+        prefixIcon: const Icon(Icons.shopping_bag_outlined),
+        filled: true,
       ),
     );
   }
 
   Widget buildCategory(BuildContext context, List<String> list) {
     return CategoryAutocompleteField(
+      categories: ExpenseCategory.values.map((e) => e.name).toList(),
       onChanged: (category) {
         setState(() {
           expenseCategory = category;

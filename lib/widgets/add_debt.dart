@@ -87,9 +87,7 @@ class AddProductState extends State<AddDebt> {
                 buildPaidAmount(),
                 const SizedBox(height: 40),
                 buildSaveButton(context),
-                const SizedBox(
-                  height: 20,
-                ) //but
+                const SizedBox(height: 40) //but
               ],
             ),
           ),
@@ -155,6 +153,7 @@ class AddProductState extends State<AddDebt> {
       initialDate: date,
       onDateSelected: (value) {
         setState(() {
+          _canSave = true;
           date = value;
         });
       },
@@ -173,6 +172,11 @@ class AddProductState extends State<AddDebt> {
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp('[0-9.]+')),
       ],
+      onChanged: (value) {
+        setState(() {
+          _canSave = true;
+        });
+      },
       textAlign: TextAlign.center,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       maxLength: 10,
@@ -215,6 +219,11 @@ class AddProductState extends State<AddDebt> {
       inputFormatters: [
         FilteringTextInputFormatter.allow(RegExp('[0-9.]+')),
       ],
+      onChanged: (value) {
+        setState(() {
+          _canSave = true;
+        });
+      },
       textAlign: TextAlign.center,
       maxLength: 10,
       decoration: InputDecoration(
@@ -235,6 +244,7 @@ class AddProductState extends State<AddDebt> {
 
   buildClientName() {
     return ClientAutocompleteField(
+      initialClient: ShopClientModel.fakeClient,
       // validator: (client) {
       //   if (client == null) {
       //     return "error".tr();
@@ -243,6 +253,7 @@ class AddProductState extends State<AddDebt> {
       // },
       onChanged: (client) {
         setState(() {
+          _canSave = true;
           clientId = client.id!;
         });
       },

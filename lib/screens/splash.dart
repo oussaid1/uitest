@@ -41,11 +41,11 @@ class AuthPageState extends State<AuthPage> {
   final _pageController = PageController(initialPage: 0);
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const App();
-      }));
-    });
+    // Future.delayed(const Duration(seconds: 5), () {
+    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //     return const App();
+    //   }));
+    // });
     super.initState();
   }
 
@@ -77,7 +77,7 @@ class AuthPageState extends State<AuthPage> {
   buildRightSide(BuildContext context) {
     return Container(
       // margin: const EdgeInsets.only(left: 20, right: 20),
-      // width: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery.of(context).size.width * 0.4,
       height: MediaQuery.of(context).size.height,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
@@ -171,8 +171,8 @@ class AuthPageState extends State<AuthPage> {
             children: [
               BluredContainer(
                 height: isSignIn
-                    ? MediaQuery.of(context).size.height * 0.3
-                    : MediaQuery.of(context).size.height * 0.5,
+                    ? MediaQuery.of(context).size.height * 0.4
+                    : MediaQuery.of(context).size.height * 0.7,
                 //height: MediaQuery.of(context).size.height * 0.5,
                 width: 400,
                 child: PageView(
@@ -244,6 +244,12 @@ class AuthPageState extends State<AuthPage> {
   buildLefttSide(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
+        // borderRadius: BorderRadius.only(
+        //   topLeft: Radius.circular(20),
+        //   bottomLeft: Radius.circular(20),
+        //   bottomRight: Radius.circular(0),
+        //   topRight: Radius.circular(0),
+        // ),
         image: DecorationImage(
           // colorFilter:
           //     ColorFilter.mode(Color.fromARGB(43, 0, 0, 0), BlendMode.darken),
@@ -253,34 +259,40 @@ class AuthPageState extends State<AuthPage> {
           ),
           fit: BoxFit.cover,
         ),
-        //color: MThemeData.primaryColor,
-        color: Colors.transparent,
       ),
       height: MediaQuery.of(context).size.height,
-      // color: Theme.of(context).colorScheme.primary,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Column(
-            children: [
-              Text('Welcome To Smart Tech-Store ',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
-                      )),
-              Text('Manage Your Sales Wisely & Smart',
-                  style: Theme.of(context).textTheme.subtitle2!),
-              //const AppInfoWidget(),
-            ],
-          ),
-          SizedBox(
-              height: 400,
-              width: 400,
-              child: Image.asset(
-                AppAssets.splashLeftPng,
+      //color: Theme.of(context).colorScheme.primary,
+      child: BluredContainer(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(0),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
+          topRight: Radius.circular(0),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                Text('Welcome To Smart Tech-Store ',
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary,
+                        )),
+                Text('Manage Your Sales Wisely & Smart',
+                    style: Theme.of(context).textTheme.subtitle2!),
+                //const AppInfoWidget(),
+              ],
+            ),
+            SizedBox(
                 height: 400,
                 width: 400,
-              )),
-        ],
+                child: Image.asset(
+                  AppAssets.splashLeftPng,
+                  height: 400,
+                  width: 400,
+                )),
+          ],
+        ),
       ),
     );
   }

@@ -21,6 +21,11 @@ class ShopClientModel {
       clientName: 'Cliente',
       phone: '123456789',
       email: 'client@gmail.com');
+  static ShopClientModel fakeClient = ShopClientModel(
+      id: '2',
+      clientName: 'fakeClient',
+      phone: '0000000000',
+      email: 'fake.client@gmail.com');
 
   ShopClientModel copyWith({
     String? id,

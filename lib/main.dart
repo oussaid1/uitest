@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:uitest/blocs/bloc/date_filter_bloc.dart';
+import 'package:uitest/autocomplete.dart';
 import 'package:uitest/screens/splash.dart';
 import 'package:uitest/theme.dart';
 import 'package:uitest/widgets/addstuff_fab.dart';
+import 'blocs/datefilterbloc/date_filter_bloc.dart';
+import 'expandable_fab.dart';
+import 'glass_widgets.dart';
 import 'models/models.dart';
 import 'models/product_data.dart';
 import 'screens/dashboard.dart';
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverlaySupport.global(
         child: MaterialApp(
-      theme: MThemeData.darkThemeData,
+      theme: MThemeData.lightThemeData,
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       home: const SplashPage(),
@@ -164,7 +167,7 @@ class _AppState extends State<App> {
           const SizedBox(width: 20),
           Expanded(
             child: DefaultTabController(
-              length: 3,
+              length: 4,
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 floatingActionButtonLocation:
@@ -173,7 +176,12 @@ class _AppState extends State<App> {
                   padding: EdgeInsets.only(bottom: 80.0),
                   child: SizedBox(
                     width: 120,
-                    child: AddStuffWidget(),
+                    child: ExpandableFab(
+                      distance: 0,
+                      children: [
+                        AddStuffWidget(),
+                      ],
+                    ),
                   ),
                 ),
                 appBar: AppBar(
@@ -229,12 +237,12 @@ class _AppState extends State<App> {
                           child: Text("Product"),
                         ),
                       ),
-                      // Tab(
-                      //   child: Align(
-                      //     alignment: Alignment.center,
-                      //     child: Text("Service"),
-                      //   ),
-                      // ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Test"),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -243,10 +251,10 @@ class _AppState extends State<App> {
                     const DashboardPage(),
                     const DebtsView(),
                     BlocProvider(
-                      create: (context) => DateFilterBloc(),
-                      child: HomePage(),
-                    ),
+                        create: (context) => DateFilterBloc(),
+                        child: const HomePage()),
                     //MyNavBarWidget(),
+                    const MyWidget(),
                   ],
                 ),
               ),
@@ -258,7 +266,50 @@ class _AppState extends State<App> {
   }
 }
 
-// Container(
-//       decoration: const BoxDecoration(
-//         gradient: MThemeData.gradient1,
-//       ),
+class MyWidget extends StatelessWidget {
+  const MyWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          const BluredContainer(
+            width: 420,
+            height: 200,
+            child: SalesByCategoryWidget(
+              taggedSales: [],
+            ),
+          ),
+          const SizedBox(height: 20),
+          BluredContainer(
+            start: 0.4,
+            end: 0.5,
+            width: MediaQuery.of(context).size.width * 0.5,
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Headline1', style: Theme.of(context).textTheme.headline1),
+                Text('Headline2', style: Theme.of(context).textTheme.headline2),
+                Text('Headline3', style: Theme.of(context).textTheme.headline3),
+                Text('Headline4', style: Theme.of(context).textTheme.headline4),
+                Text('Headline5', style: Theme.of(context).textTheme.headline5),
+                Text('Headline6', style: Theme.of(context).textTheme.headline6),
+                Text('Subtitle1', style: Theme.of(context).textTheme.subtitle1),
+                Text('Subtitle2', style: Theme.of(context).textTheme.subtitle2),
+                Text('BodyLarge', style: Theme.of(context).textTheme.bodyLarge),
+                Text('BodyMedium',
+                    style: Theme.of(context).textTheme.bodyMedium),
+                Text('BodySmall', style: Theme.of(context).textTheme.bodySmall),
+                Text('Caption', style: Theme.of(context).textTheme.caption),
+                Text('Button', style: Theme.of(context).textTheme.button),
+                Text('Overline', style: Theme.of(context).textTheme.overline),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
