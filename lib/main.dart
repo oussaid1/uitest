@@ -174,14 +174,11 @@ class _AppState extends State<App> {
                     FloatingActionButtonLocation.endDocked,
                 floatingActionButton: const Padding(
                   padding: EdgeInsets.only(bottom: 80.0),
-                  child: SizedBox(
-                    width: 120,
-                    child: ExpandableFab(
-                      distance: 0,
-                      children: [
-                        AddStuffWidget(),
-                      ],
-                    ),
+                  child: ExpandableFab(
+                    distance: 0,
+                    children: [
+                      AddStuffWidget(),
+                    ],
                   ),
                 ),
                 appBar: AppBar(
