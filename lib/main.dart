@@ -17,6 +17,7 @@ import 'models/product_data.dart';
 import 'screens/dashboard.dart';
 import 'screens/debtslist.dart';
 import 'screens/home.dart';
+import 'screens/recharge/reachrge_tab.dart';
 
 void main() => runApp(const ProviderScope(child: MyApp()));
 

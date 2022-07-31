@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:uitest/expandable_fab.dart';
 import 'package:uitest/extentions.dart';
 import 'package:uitest/glass_widgets.dart';
 import 'package:uitest/models/recharge/recharge.dart';
@@ -11,8 +9,8 @@ import 'package:uitest/search_by_widget.dart';
 
 import '../../popups.dart';
 
-class RechargeStock extends StatelessWidget {
-  const RechargeStock({
+class RechargeSales extends StatelessWidget {
+  const RechargeSales({
     Key? key,
   }) : super(key: key);
 
@@ -20,32 +18,13 @@ class RechargeStock extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        BluredContainer(
-          height: 270,
-          width: 420,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.phone_android,
-                      color: Color.fromARGB(255, 254, 242, 255),
-                      size: 30,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      'Recharge Share',
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+        Wrap(
+          runSpacing: 15,
+          spacing: 15,
+          children: const [
+            RechargeSalesInventoryWidget(),
+            RechargeSalesPieChart(),
+          ],
         ),
         const SizedBox(
           height: 20,
@@ -67,14 +46,8 @@ class RechargeStock extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: GridView.builder(
+                child: ListView.builder(
                   itemCount: RechargeModel.fakeData.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 8,
-                      //mainAxisExtent: 100,
-                      childAspectRatio: 1.8),
                   itemBuilder: (context, index) {
                     return RechargeListItem(
                       onDelete: (rech) {},
@@ -121,6 +94,80 @@ class RechargeStock extends StatelessWidget {
   }
 }
 
+class RechargeSalesPieChart extends StatelessWidget {
+  const RechargeSalesPieChart({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BluredContainer(
+      height: 270,
+      width: 420,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.phone_android,
+                  color: Color.fromARGB(255, 254, 242, 255),
+                  size: 30,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Recharge Share',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RechargeSalesInventoryWidget extends StatelessWidget {
+  const RechargeSalesInventoryWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BluredContainer(
+      height: 270,
+      width: 420,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.phone_android,
+                  color: Color.fromARGB(255, 254, 242, 255),
+                  size: 30,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                Text(
+                  'Recharge Sales',
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class RechargeListItem extends StatelessWidget {
   final RechargeModel recharge;
   final void Function(RechargeModel) onTap;
@@ -163,6 +210,7 @@ class RechargeListItem extends StatelessWidget {
       child: InkWell(
         onTap: () => onTap(recharge),
         child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: RechargeModel.getOprtrColor(recharge.oprtr),
@@ -171,54 +219,61 @@ class RechargeListItem extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      recharge.oprtr.name.toUpperCase(),
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ),
-                  Container(
-                    width: 43,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(0),
-                        topLeft: Radius.circular(0),
-                        bottomLeft: Radius.circular(10),
-                      ),
-                      color: Color.fromARGB(123, 255, 255, 255),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        '233',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    '20 DH',
-                    style: Theme.of(context).textTheme.headline1,
+                  Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        width: 37,
+                        height: 37,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(50),
+                          ),
+                          color: Color.fromARGB(123, 255, 255, 255),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '23',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).textTheme.headline5,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              recharge.oprtr.name.toUpperCase(),
+                              style: Theme.of(context).textTheme.headline3,
+                            ),
+                            Text(
+                              'on : ${recharge.date.ddmmyyyy()}',
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'from : laayoun',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  Text(
-                    'on : ${recharge.date.ddmmyyyy()}',
-                    style: Theme.of(context).textTheme.subtitle2,
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        '20 DH',
+                        style: Theme.of(context).textTheme.headline1,
+                      ),
+                      Text(
+                        'from : laayoun',
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                    ],
                   ),
                 ],
               ),
