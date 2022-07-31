@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:uitest/autocomplete.dart';
+import 'package:uitest/screens/recharge/recharge_list.dart';
 import 'package:uitest/screens/splash.dart';
 import 'package:uitest/theme.dart';
 import 'package:uitest/widgets/addstuff_fab.dart';
@@ -77,31 +78,6 @@ class _AppState extends State<App> {
                       labelType: NavigationRailLabelType.selected,
                       destinations: const [
                         NavigationRailDestination(
-                          icon: Icon(Icons.favorite_border),
-                          selectedIcon: Icon(Icons.favorite),
-                          label: Text('First'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.bookmark_border),
-                          selectedIcon: Icon(Icons.book),
-                          label: Text('Second'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.star_border),
-                          selectedIcon: Icon(Icons.star),
-                          label: Text('Third'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.favorite_border),
-                          selectedIcon: Icon(Icons.favorite),
-                          label: Text('First'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.bookmark_border),
-                          selectedIcon: Icon(Icons.book),
-                          label: Text('Second'),
-                        ),
-                        NavigationRailDestination(
                           icon: Icon(Icons.star_border),
                           selectedIcon: Icon(Icons.star),
                           label: Text('Third'),
@@ -120,36 +96,6 @@ class _AppState extends State<App> {
                           icon: Icon(Icons.favorite_border),
                           selectedIcon: Icon(Icons.favorite),
                           label: Text('First'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.bookmark_border),
-                          selectedIcon: Icon(Icons.book),
-                          label: Text('Second'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.star_border),
-                          selectedIcon: Icon(Icons.star),
-                          label: Text('Third'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.bookmark_border),
-                          selectedIcon: Icon(Icons.book),
-                          label: Text('Second'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.star_border),
-                          selectedIcon: Icon(Icons.star),
-                          label: Text('Third'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.favorite_border),
-                          selectedIcon: Icon(Icons.favorite),
-                          label: Text('First'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.bookmark_border),
-                          selectedIcon: Icon(Icons.book),
-                          label: Text('Second'),
                         ),
                         NavigationRailDestination(
                           icon: Icon(Icons.star_border),
@@ -167,7 +113,7 @@ class _AppState extends State<App> {
           const SizedBox(width: 20),
           Expanded(
             child: DefaultTabController(
-              length: 4,
+              length: 5,
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 floatingActionButtonLocation:
@@ -240,6 +186,12 @@ class _AppState extends State<App> {
                           child: Text("Test"),
                         ),
                       ),
+                      Tab(
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Text("Recharges"),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -252,6 +204,7 @@ class _AppState extends State<App> {
                         child: const HomePage()),
                     //MyNavBarWidget(),
                     const MyWidget(),
+                    const RechargeTab()
                   ],
                 ),
               ),

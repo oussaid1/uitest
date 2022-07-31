@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:uitest/autocomplete.dart';
 import 'package:uitest/extentions.dart';
 
 import 'glass_widgets.dart';
@@ -43,8 +44,8 @@ class _SearchByWidgetState extends State<SearchByWidget> {
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SearchCategorySpinner(
-                      initialItem: 'Name',
+                    child: CategoryAutocompleteField(
+                      // initialItem: 'Name',
                       onChanged: (value) {
                         setState(() {
                           selectedCategory = value;
@@ -52,7 +53,7 @@ class _SearchByWidgetState extends State<SearchByWidget> {
                         //if (widget.onChanged != null)
                         widget.onChanged!(value);
                       },
-                      list: widget.listOfCategories,
+                      categories: widget.listOfCategories,
                     ),
                   ),
                 ))

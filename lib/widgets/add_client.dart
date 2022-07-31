@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/client/shop_client.dart';
 import '../theme.dart';
 
@@ -11,10 +10,9 @@ class AddClient extends StatefulWidget {
   const AddClient({
     Key? key,
     this.client,
-    required this.pContext,
   }) : super(key: key);
   final ShopClientModel? client;
-  final BuildContext pContext;
+
   @override
   AddClientState createState() => AddClientState();
 }
