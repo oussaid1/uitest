@@ -1,15 +1,13 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:uitest/expandable_fab.dart';
 import 'package:uitest/extentions.dart';
 import 'package:uitest/glass_widgets.dart';
 import 'package:uitest/models/recharge/recharge.dart';
 import 'package:uitest/screens/recharge/sell_recharge.dart';
 import 'package:uitest/search_by_widget.dart';
-
 import '../../popups.dart';
+import 'add_recharge.dart';
 
 class RechargeStock extends StatelessWidget {
   const RechargeStock({
@@ -18,105 +16,130 @@ class RechargeStock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        BluredContainer(
-          height: 270,
-          width: 420,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.phone_android,
-                      color: Color.fromARGB(255, 254, 242, 255),
-                      size: 30,
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      'Recharge Share',
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                  ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          BluredContainer(
+            height: 270,
+            width: 420,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.phone_android,
+                        color: Color.fromARGB(255, 254, 242, 255),
+                        size: 30,
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'Recharge Share',
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        BluredContainer(
-          // height: 270,
-          width: 840,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SearchByWidget(
-                  withCategory: true,
-                  listOfCategories: RechargeOperator.values
-                      .map((e) => e.name.toUpperCase())
-                      .toList(),
-                  onBothChanged: (p0, p1) {},
-                  onSearchTextChanged: (p0) {},
-                ),
-              ),
-              Expanded(
-                child: GridView.builder(
-                  itemCount: RechargeModel.fakeData.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 8,
-                      //mainAxisExtent: 100,
-                      childAspectRatio: 1.8),
-                  itemBuilder: (context, index) {
-                    return RechargeListItem(
-                      onDelete: (rech) {},
-                      onEdit: (rech) {
-                        MDialogs.dialogSimple(
-                          context,
-                          title: Text(
-                            'Edit Recharge',
-                            style: Theme.of(context).textTheme.headline3!,
-                          ),
-                          contentWidget: SingleChildScrollView(
-                            child: SellRechargeWidget(
-                              state: AddRechargeState.editing,
-                              recharge: rech,
-                            ),
-                          ),
-                        );
-                      },
-                      onTap: (recharge) {
-                        MDialogs.dialogSimple(
-                          context,
-                          title: Text(
-                            '',
-                            style: Theme.of(context).textTheme.headline3!,
-                          ),
-                          contentWidget: SingleChildScrollView(
-                            child: SellRechargeWidget(
-                              state: AddRechargeState.selling,
-                              recharge: recharge,
-                            ),
-                          ),
-                        );
-                      },
-                      recharge: RechargeModel.fakeData[index],
-                    );
-                  },
-                ),
-              )
-            ],
+          const SizedBox(
+            height: 20,
           ),
-        )
-      ],
+          const RchargeStockList(),
+        ],
+      ),
+    );
+  }
+}
+
+class RchargeStockList extends StatefulWidget {
+  const RchargeStockList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<RchargeStockList> createState() => _RchargeStockListState();
+}
+
+class _RchargeStockListState extends State<RchargeStockList> {
+  String filter = '';
+  @override
+  Widget build(BuildContext context) {
+    return BluredContainer(
+      height: 570,
+      width: context.width - 20,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SearchByWidget(
+              withCategory: true,
+              listOfCategories: RechargeOperator.values
+                  .map((e) => e.name.toUpperCase())
+                  .toList(),
+              onBothChanged: (category, filter) {
+                setState(() {
+                  this.filter = filter;
+                });
+              },
+              onSearchTextChanged: (filterText) {
+                setState(() {
+                  filter = filterText;
+                });
+              },
+            ),
+          ),
+          Expanded(
+              child: Wrap(
+                  runSpacing: 15,
+                  spacing: 15,
+                  children: RechargeModel.fakeData
+                      .where((element) => element.oprtr.name
+                          .toLowerCase()
+                          .contains(filter.toLowerCase()))
+                      .map((e) => SizedBox(
+                            width: 200,
+                            height: 100,
+                            child: RechargeListItem(
+                              onDelete: (rech) {},
+                              onEdit: (rech) {
+                                log('onEdit ${rech.toString()}');
+                                MDialogs.dialogSimple(
+                                  context,
+                                  title: Text(
+                                    'Edit Recharge',
+                                    style:
+                                        Theme.of(context).textTheme.headline3!,
+                                  ),
+                                  contentWidget: AddRechargeWidget(
+                                    recharge: rech,
+                                  ),
+                                );
+                              },
+                              onTap: (RechargeModel recharge) {
+                                MDialogs.dialogSimple(
+                                  context,
+                                  title: Text(
+                                    'Sell Recharge',
+                                    style:
+                                        Theme.of(context).textTheme.headline3!,
+                                  ),
+                                  contentWidget: SellRechargeWidget(
+                                    state: AddRechargeState.selling,
+                                    recharge: recharge,
+                                  ),
+                                );
+                              },
+                              recharge: e,
+                            ),
+                          ))
+                      .toList())),
+        ],
+      ),
     );
   }
 }
@@ -195,7 +218,7 @@ class RechargeListItem extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        '233',
+                        '${recharge.qntt}',
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline6,
                       ),
@@ -209,12 +232,8 @@ class RechargeListItem extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    '20 DH',
+                    '${recharge.amount} DH',
                     style: Theme.of(context).textTheme.headline1,
-                  ),
-                  Text(
-                    'from : laayoun',
-                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                   Text(
                     'on : ${recharge.date.ddmmyyyy()}',

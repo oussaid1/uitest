@@ -51,7 +51,7 @@ class RechargeTab extends StatelessWidget {
         body: const TabBarView(
           children: [
             RechargeStock(),
-            RechargeSales(),
+            RechargeSalesView(),
           ],
         ),
       ),

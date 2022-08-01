@@ -32,14 +32,17 @@ class SellRechargeWidget extends StatefulWidget {
 class SellRechargeStateWidget extends State<SellRechargeWidget> {
   //final GlobalKey<FormState> dformKey = GlobalKey<FormState>();
   //final TextEditingController clientController = TextEditingController();
+  late RechargeOperator oprtr;
   String clientId = "";
   DateTime _date = DateTime.now();
   num quantity = 1;
-  RechargeOperator? oprtr;
   RechargeModel? recharge;
   String _rechargeId = "";
+
+  ////////////////////////////////////////////////////////////////////////////////
   bool _canSave = false;
   bool _isUpdate = false;
+  ////////////////////////////////////////////////////////////////////////////////
   @override
   void initState() {
     if (widget.state == AddRechargeState.editing) {
@@ -62,23 +65,25 @@ class SellRechargeStateWidget extends State<SellRechargeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildOperator(context, oprtr: oprtr!),
-          const SizedBox(height: 15),
-          _buildClientName(),
-          const SizedBox(height: 15),
-          _buildQuantity(context),
-          const SizedBox(height: 15),
-          buildDate(),
-          const SizedBox(height: 30),
-          buildSaveButton(context),
-          const SizedBox(height: 30) //but
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          // mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildOperator(context, oprtr: oprtr),
+            const SizedBox(height: 15),
+            _buildClientName(),
+            const SizedBox(height: 15),
+            _buildQuantity(context),
+            const SizedBox(height: 15),
+            buildDate(),
+            const SizedBox(height: 30),
+            buildSaveButton(context),
+            const SizedBox(height: 30) //but
+          ],
+        ),
       ),
     );
   }
@@ -100,7 +105,7 @@ class SellRechargeStateWidget extends State<SellRechargeWidget> {
                         rSId: widget.rechargeSale!.rSId,
                         dateSld: _date,
                         qnttSld: quantity,
-                        soldRchrgId: widget.recharge?.id,
+                        soldRchrgId: widget.rechargeSale?.id,
                         clntID: clientId,
                         //rSId: soldRechargeId!.id,
                       );
@@ -116,7 +121,7 @@ class SellRechargeStateWidget extends State<SellRechargeWidget> {
                       final recharge = RechargeSale(
                         dateSld: _date,
                         qnttSld: quantity,
-                        soldRchrgId: widget.recharge?.id,
+                        soldRchrgId: _rechargeId,
                         clntID: clientId,
                       );
                       log('${recharge.toMap()}');

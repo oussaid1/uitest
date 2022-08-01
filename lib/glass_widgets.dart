@@ -36,8 +36,8 @@ class BluredContainer extends StatelessWidget {
             sigmaX: blurSygmaX ?? 80, sigmaY: blurSygmaY ?? 80),
         child: Container(
           // margin: margin,
-          width: width ?? 420, // MediaQuery.of(context).size.width,
-          height: height ?? 400, // MediaQuery.of(context).size.height,
+          width: width ?? MediaQuery.of(context).size.width,
+          height: height ?? MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             borderRadius: borderRadius,
             gradient: LinearGradient(

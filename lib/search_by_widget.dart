@@ -10,8 +10,8 @@ class SearchByWidget extends StatefulWidget {
   final List<String> listOfCategories;
   final void Function(String)? onChanged;
   final String? initialCategoryValue;
-  final void Function(String) onSearchTextChanged;
-  final void Function(String, String) onBothChanged;
+  final void Function(String searchText) onSearchTextChanged;
+  final void Function(String catg, String searchText) onBothChanged;
 
   //final String searchText;
   const SearchByWidget({
@@ -32,7 +32,7 @@ class SearchByWidget extends StatefulWidget {
 
 class _SearchByWidgetState extends State<SearchByWidget> {
   String searchText = '';
-  String selectedCategory = '';
+  String? selectedCategory;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -44,16 +44,35 @@ class _SearchByWidgetState extends State<SearchByWidget> {
                   flex: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: CategoryAutocompleteField(
-                      // initialItem: 'Name',
-                      onChanged: (value) {
+
+                    /// a dropdown button with a list of categories
+                    child: DropdownButtonFormField<String>(
+                      borderRadius: BorderRadius.circular(10),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'category',
+                      ),
+                      dropdownColor: Colors.white.withOpacity(0.8),
+                      value: selectedCategory,
+                      icon: const Icon(Icons.arrow_drop_down),
+                      iconSize: 24,
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.deepPurple),
+                      onChanged: (String? newValue) {
                         setState(() {
-                          selectedCategory = value;
+                          selectedCategory = newValue!;
                         });
-                        //if (widget.onChanged != null)
-                        widget.onChanged!(value);
+                        widget.onBothChanged.call(newValue!, searchText);
                       },
-                      categories: widget.listOfCategories,
+                      items: widget.listOfCategories
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
                   ),
                 ))
@@ -68,7 +87,7 @@ class _SearchByWidgetState extends State<SearchByWidget> {
                 onChanged: (fillterText) {
                   widget.onSearchTextChanged(fillterText);
                   widget.onBothChanged(
-                    selectedCategory,
+                    selectedCategory!,
                     fillterText,
                   );
                 },

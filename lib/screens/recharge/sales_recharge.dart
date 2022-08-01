@@ -9,87 +9,94 @@ import 'package:uitest/search_by_widget.dart';
 
 import '../../popups.dart';
 
-class RechargeSales extends StatelessWidget {
-  const RechargeSales({
+class RechargeSalesView extends StatelessWidget {
+  const RechargeSalesView({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Wrap(
-          runSpacing: 15,
-          spacing: 15,
-          children: const [
-            RechargeSalesInventoryWidget(),
-            RechargeSalesPieChart(),
-          ],
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        BluredContainer(
-          // height: 270,
-          width: 840,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SearchByWidget(
-                  withCategory: true,
-                  listOfCategories: RechargeOperator.values
-                      .map((e) => e.name.toUpperCase())
-                      .toList(),
-                  onBothChanged: (p0, p1) {},
-                  onSearchTextChanged: (p0) {},
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: RechargeModel.fakeData.length,
-                  itemBuilder: (context, index) {
-                    return RechargeListItem(
-                      onDelete: (rech) {},
-                      onEdit: (rech) {
-                        MDialogs.dialogSimple(
-                          context,
-                          title: Text(
-                            'Edit Recharge',
-                            style: Theme.of(context).textTheme.headline3!,
-                          ),
-                          contentWidget: SingleChildScrollView(
-                            child: SellRechargeWidget(
-                              state: AddRechargeState.editing,
-                              recharge: rech,
-                            ),
-                          ),
-                        );
-                      },
-                      onTap: (recharge) {
-                        MDialogs.dialogSimple(
-                          context,
-                          title: Text(
-                            '',
-                            style: Theme.of(context).textTheme.headline3!,
-                          ),
-                          contentWidget: SingleChildScrollView(
-                            child: SellRechargeWidget(
-                              state: AddRechargeState.selling,
-                              recharge: recharge,
-                            ),
-                          ),
-                        );
-                      },
-                      recharge: RechargeModel.fakeData[index],
-                    );
-                  },
-                ),
-              )
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Wrap(
+            runSpacing: 15,
+            spacing: 15,
+            children: const [
+              RechargeSalesInventoryWidget(),
+              RechargeSalesPieChart(),
             ],
           ),
-        )
-      ],
+          const SizedBox(
+            height: 20,
+          ),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: context.width * 0.5,
+            ),
+            child: BluredContainer(
+              height: 570,
+              width: context.width - 20,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SearchByWidget(
+                      withCategory: true,
+                      listOfCategories: RechargeOperator.values
+                          .map((e) => e.name.toUpperCase())
+                          .toList(),
+                      onBothChanged: (p0, p1) {},
+                      onSearchTextChanged: (p0) {},
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: RechargeModel.fakeData.length,
+                      itemBuilder: (context, index) {
+                        return RechargeListItem(
+                          onDelete: (rech) {},
+                          onEdit: (rech) {
+                            MDialogs.dialogSimple(
+                              context,
+                              title: Text(
+                                'Edit Recharge',
+                                style: Theme.of(context).textTheme.headline3!,
+                              ),
+                              contentWidget: SingleChildScrollView(
+                                child: SellRechargeWidget(
+                                  state: AddRechargeState.editing,
+                                  recharge: rech,
+                                ),
+                              ),
+                            );
+                          },
+                          onTap: (recharge) {
+                            MDialogs.dialogSimple(
+                              context,
+                              title: Text(
+                                '',
+                                style: Theme.of(context).textTheme.headline3!,
+                              ),
+                              contentWidget: SingleChildScrollView(
+                                child: SellRechargeWidget(
+                                  state: AddRechargeState.selling,
+                                  recharge: recharge,
+                                ),
+                              ),
+                            );
+                          },
+                          recharge: RechargeModel.fakeData[index],
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -213,7 +220,10 @@ class RechargeListItem extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: RechargeModel.getOprtrColor(recharge.oprtr),
+            border: Border.all(
+              color: RechargeModel.getOprtrColor(recharge.oprtr),
+              width: 1,
+            ),
           ),
           child: Column(
             children: [
@@ -228,11 +238,11 @@ class RechargeListItem extends StatelessWidget {
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         width: 37,
                         height: 37,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(50),
                           ),
-                          color: Color.fromARGB(123, 255, 255, 255),
+                          color: Colors.white.withOpacity(0.5),
                         ),
                         child: Center(
                           child: Text(
@@ -260,18 +270,35 @@ class RechargeListItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Column(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    // mainAxisSize: MainAxisSize.min,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        '20 DH',
-                        style: Theme.of(context).textTheme.headline1,
+                      Column(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        // mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '20 DH',
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                          Text(
+                            'from : laayoun',
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'from : laayoun',
-                        style: Theme.of(context).textTheme.subtitle2,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          ),
+                          color: RechargeModel.getOprtrColor(recharge.oprtr),
+                          //color: Color.fromARGB(255, 254, 242, 255),
+                        ),
+                        width: 4,
+                        height: 37,
                       ),
                     ],
                   ),

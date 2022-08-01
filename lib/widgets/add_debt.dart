@@ -60,9 +60,6 @@ class AddProductState extends State<AddDebt> {
 
   @override
   Widget build(BuildContext context) {
-    // var clientNamesLis = ref.watch(shopClientsProvider.state).state;
-    // var productCatList = ref.watch(productCategoryListProvider.state).state;
-    // var productsList = context.read<ProductBloc>().state;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

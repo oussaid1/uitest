@@ -17,7 +17,6 @@ class RechargeModel {
   double amount;
   num qntt;
   DateTime date;
-  String? suplyrID;
 
   RechargeModel({
     this.id,
@@ -26,7 +25,6 @@ class RechargeModel {
     required this.amount,
     required this.qntt,
     required this.date,
-    this.suplyrID,
   });
 
   RechargeModel copyWith({
@@ -45,7 +43,6 @@ class RechargeModel {
       amount: amount ?? this.amount,
       qntt: qntt ?? this.qntt,
       date: date ?? this.date,
-      suplyrID: suplyrID ?? this.suplyrID,
     );
   }
 
@@ -57,7 +54,6 @@ class RechargeModel {
       'amount': amount,
       'qnt': qntt,
       'date': date,
-      'suplyrID': suplyrID,
     };
   }
 
@@ -69,7 +65,6 @@ class RechargeModel {
       amount: map['amount'] as double,
       qntt: map['qnt'] as num,
       date: map['date'] as DateTime,
-      suplyrID: map['suplyrID'],
     );
   }
 
@@ -80,37 +75,66 @@ class RechargeModel {
 
   @override
   String toString() {
-    return 'RachargeModel(id: $id, oprtr: $oprtr, percntg: $percntg, amount: $amount, qnt: $qntt, date: $date, suplyrID: $suplyrID)';
+    return 'RachargeModel(id: $id, oprtr: $oprtr, percntg: $percntg, amount: $amount, qnt: $qntt, date: $date,)';
   }
 
-  /// a list  of fake data to be used for testing
+  /// a list  of 20 fake data to be used for testing
   static List<RechargeModel> get fakeData => [
         RechargeModel(
           id: '1',
           oprtr: RechargeOperator.orange,
-          percntg: 10,
+          percntg: 7.5,
           amount: 10,
-          qntt: 1,
+          qntt: 25,
           date: DateTime.now(),
-          suplyrID: '1',
         ),
         RechargeModel(
           id: '2',
           oprtr: RechargeOperator.inwi,
-          percntg: 7,
-          amount: 20,
-          qntt: 2,
-          date: DateTime(2020, 1, 1),
-          suplyrID: '2',
+          percntg: 7.5,
+          amount: 10,
+          qntt: 25,
+          date: DateTime.now(),
         ),
         RechargeModel(
           id: '3',
           oprtr: RechargeOperator.iam,
-          percntg: 30,
-          amount: 30,
-          qntt: 3,
+          percntg: 7.5,
+          amount: 10,
+          qntt: 25,
           date: DateTime.now(),
-          suplyrID: '3',
+        ),
+        RechargeModel(
+          id: '4',
+          oprtr: RechargeOperator.orange,
+          percntg: 7.5,
+          amount: 10,
+          qntt: 25,
+          date: DateTime.now(),
+        ),
+        RechargeModel(
+          id: '5',
+          oprtr: RechargeOperator.inwi,
+          percntg: 6.5,
+          amount: 20,
+          qntt: 16,
+          date: DateTime.now(),
+        ),
+        RechargeModel(
+          id: '6',
+          oprtr: RechargeOperator.inwi,
+          percntg: 7.5,
+          amount: 10,
+          qntt: 25,
+          date: DateTime.now(),
+        ),
+        RechargeModel(
+          id: '7',
+          oprtr: RechargeOperator.orange,
+          percntg: 7.5,
+          amount: 10,
+          qntt: 25,
+          date: DateTime.now(),
         ),
       ];
 
@@ -156,15 +180,14 @@ class RechargeSale extends RechargeModel {
     required this.qnttSld,
     required this.soldRchrgId,
     required this.dateSld,
-    RechargeModel? rchgMdl,
+    RechargeModel? rechargeModel,
   }) : super(
-          id: rchgMdl?.id,
-          oprtr: rchgMdl?.oprtr ?? RechargeOperator.orange,
-          percntg: rchgMdl?.percntg ?? 0.0,
-          amount: rchgMdl?.amount ?? 0.0,
-          qntt: rchgMdl?.qntt ?? 0,
-          date: rchgMdl?.date ?? DateTime.now(),
-          suplyrID: rchgMdl?.suplyrID,
+          id: rechargeModel?.id,
+          oprtr: rechargeModel?.oprtr ?? RechargeOperator.orange,
+          percntg: rechargeModel?.percntg ?? 0.0,
+          amount: rechargeModel?.amount ?? 0.0,
+          qntt: rechargeModel?.qntt ?? 0,
+          date: rechargeModel?.date ?? DateTime.now(),
         );
 
   RechargeSale copyRSWith({
@@ -214,7 +237,6 @@ class RechargeSale extends RechargeModel {
       amount: amount ?? this.amount,
       qntt: qntt ?? this.qntt,
       date: date ?? this.date,
-      suplyrID: suplyrID ?? this.suplyrID,
     );
   }
 
