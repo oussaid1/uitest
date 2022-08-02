@@ -357,7 +357,7 @@ class RadialChart extends StatelessWidget {
                               pointColorMapper: (ChartData data, _) =>
                                   data.color,
                               dataLabelMapper: (ChartData data, _) =>
-                                  data.value!.toPrecision(2).toString(),
+                                  data.value!.toString(),
                             )
                           ],
                           tooltipBehavior: TooltipBehavior(enable: true),
@@ -374,23 +374,23 @@ class RadialChart extends StatelessWidget {
                         _buildLegendItem(context,
                             color: chartData[0].color!,
                             label: chartData[0].label!,
-                            value: chartData[0].value!.toPrecision(2)),
+                            value: chartData[0].value!),
                         _buildLegendItem(context,
                             color: chartData[1].color!,
                             label: chartData[1].label!,
-                            value: chartData[1].value!.toPrecision(2)),
+                            value: chartData[1].value!),
                         _buildLegendItem(context,
                             color: chartData[2].color!,
                             label: chartData[2].label!,
-                            value: chartData[2].value!.toPrecision(2)),
+                            value: chartData[2].value!),
                         _buildLegendItem(context,
                             color: chartData[3].color!,
                             label: chartData[3].label!,
-                            value: chartData[3].value!.toPrecision(2)),
+                            value: chartData[3].value!),
                         _buildLegendItem(context,
                             color: chartData[4].color!,
                             label: chartData[4].label!,
-                            value: chartData[4].value!.toPrecision(2)),
+                            value: chartData[4].value!),
                       ],
                     ),
                   ),
@@ -402,7 +402,7 @@ class RadialChart extends StatelessWidget {
   }
 
   _buildLegendItem(BuildContext context,
-      {required String label, required Color color, required double value}) {
+      {required String label, required Color color, required num value}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(

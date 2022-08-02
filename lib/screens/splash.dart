@@ -41,7 +41,7 @@ class AuthPageState extends State<AuthPage> {
   final _pageController = PageController(initialPage: 0);
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return const App();
       }));

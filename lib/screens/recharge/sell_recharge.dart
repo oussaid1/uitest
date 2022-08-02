@@ -17,7 +17,7 @@ enum AddRechargeState {
 class SellRechargeWidget extends StatefulWidget {
   final RechargeModel? recharge;
   final AddRechargeState state;
-  final RechargeSale? rechargeSale;
+  final RechargeSaleModel? rechargeSale;
   const SellRechargeWidget({
     Key? key,
     this.recharge,
@@ -101,7 +101,7 @@ class SellRechargeStateWidget extends State<SellRechargeWidget> {
                       setState(() {
                         _canSave = false;
                       });
-                      final rechargeSale = RechargeSale(
+                      final rechargeSale = RechargeSaleModel(
                         rSId: widget.rechargeSale!.rSId,
                         dateSld: _date,
                         qnttSld: quantity,
@@ -118,7 +118,7 @@ class SellRechargeStateWidget extends State<SellRechargeWidget> {
                       setState(() {
                         _canSave = false;
                       });
-                      final recharge = RechargeSale(
+                      final recharge = RechargeSaleModel(
                         dateSld: _date,
                         qnttSld: quantity,
                         soldRchrgId: _rechargeId,

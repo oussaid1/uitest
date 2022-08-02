@@ -6,13 +6,13 @@ import 'recharge.dart';
 class RecghargeViewModel {
   final List<ShopClientModel> shopClients = [];
   final List<RechargeModel> _rechargeList = [];
-  final List<RechargeSale> _rechargeSalesList = <RechargeSale>[];
+  final List<RechargeSaleModel> _rechargeSalesList = <RechargeSaleModel>[];
   List<RechargeModel> get rechargeList => _rechargeList;
-  List<RechargeSale> get rechargeSalesList => _rechargeSalesList;
+  List<RechargeSaleModel> get rechargeSalesList => _rechargeSalesList;
 
   RecghargeViewModel({
     required List<RechargeModel> rechargeList,
-    required List<RechargeSale> rechargeSalesList,
+    required List<RechargeSaleModel> rechargeSalesList,
     required List<ShopClientModel> shopClients,
   }) {
     _rechargeList.addAll(rechargeList);
@@ -22,12 +22,12 @@ class RecghargeViewModel {
   //////////////////////////////////////////////////////////////
   /// get combined recharge list
 
-  List<RechargeSale> get combinedRechargeList {
-    List<RechargeSale> combinedList = [];
-    for (RechargeSale rechargeSale in rechargeSalesList) {
+  List<RechargeSaleModel> get combinedRechargeList {
+    List<RechargeSaleModel> combinedList = [];
+    for (RechargeSaleModel rechargeSale in rechargeSalesList) {
       for (RechargeModel recharge in rechargeList) {
         if (rechargeSale.soldRchrgId == recharge.id) {
-          combinedList.add(RechargeSale(
+          combinedList.add(RechargeSaleModel(
             clntID: rechargeSale.clntID,
             rSId: rechargeSale.rSId,
             qnttSld: rechargeSale.qnttSld,
@@ -43,14 +43,14 @@ class RecghargeViewModel {
 
   //////////////////////////////////////////////////////////////
   /// get combined recharge joined to shop client
-  List<ShopClientRechargesData> get combinedRechargeJoinedToShopClient {
+  List<ShopClientRechargesData> get shopClientCombinedRechargeSales {
     List<ShopClientRechargesData> combinedList = [];
     for (ShopClientModel client in shopClients) {
       combinedList.add(ShopClientRechargesData(
         shopClient: client,
-        rechargeSalesList: combinedRechargeList
-            .where(
-                (RechargeSale rechargeSale) => rechargeSale.clntID == client.id)
+    fullRechargesList: combinedRechargeList
+            .where((RechargeSaleModel rechargeSale) =>
+                rechargeSale.clntID == client.id)
             .toList(),
       ));
     }

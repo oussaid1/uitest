@@ -68,123 +68,6 @@ class SalesOverAllWidget extends StatelessWidget {
   }
 }
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    buildOneItem(
-            {required String label,
-            required num value,
-            bool withDollarsign = false}) =>
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: Text(label,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      fontWeight: FontWeight.normal,
-                      color: context.theme.onSecondaryContainer)),
-            ),
-            PriceNumberZone(
-              withDollarSign: withDollarsign,
-              right: const SizedBox.shrink(),
-              price: value,
-              priceStyle: Theme.of(context).textTheme.caption!.copyWith(
-                    color: Colors.white,
-                  ),
-              // style: Theme.of(context)
-              //     .textTheme
-              //     .headline5!
-              //     .copyWith(color: context.theme.onPrimary),
-            ),
-          ],
-        );
-    return Column(
-      children: [
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Products',
-                  style: Theme.of(context).textTheme.caption!.copyWith(
-                      //color: context.theme.onSecondaryContainer
-                      )),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                buildOneItem(
-                  label: 'Amount',
-                  value: 98740.0,
-                  withDollarsign: true,
-                ),
-                const SizedBox(width: 21),
-                buildOneItem(
-                  label: 'Items',
-                  value: 98740.0,
-                  withDollarsign: false,
-                ),
-                const SizedBox(width: 21),
-                buildOneItem(
-                  label: 'Quantity',
-                  value: 740,
-                  withDollarsign: false,
-                ),
-              ],
-            ),
-            const SizedBox(width: 8),
-          ],
-        ),
-        const SizedBox(height: 15),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text('Services',
-                  style: Theme.of(context).textTheme.caption!.copyWith(
-                      //color: context.theme.onSecondaryContainer,
-                      )),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                buildOneItem(
-                  label: 'Amount',
-                  value: 98740.0,
-                  withDollarsign: true,
-                ),
-                const SizedBox(width: 21),
-                buildOneItem(
-                  label: 'Items',
-                  value: 98740.0,
-                  withDollarsign: false,
-                ),
-                const SizedBox(width: 21),
-                buildOneItem(
-                  label: 'Quantity',
-                  value: 740,
-                  withDollarsign: false,
-                ),
-              ],
-            ),
-            const SizedBox(width: 8),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
 class SalesDataTableInvent extends StatelessWidget {
   const SalesDataTableInvent({
     Key? key,
@@ -328,3 +211,128 @@ class SalesDataTableInvent extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+// class MyWhidget extends StatelessWidget {
+//   const MyWidget({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     buildOneItem(
+//             {required String label,
+//             required num value,
+//             bool withDollarsign = false}) =>
+//         Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.only(bottom: 4.0),
+//               child: Text(label,
+//                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
+//                       fontWeight: FontWeight.normal,
+//                       color: context.theme.onSecondaryContainer)),
+//             ),
+//             PriceNumberZone(
+//               withDollarSign: withDollarsign,
+//               right: const SizedBox.shrink(),
+//               price: value,
+//               priceStyle: Theme.of(context).textTheme.caption!.copyWith(
+//                     color: Colors.white,
+//                   ),
+//               // style: Theme.of(context)
+//               //     .textTheme
+//               //     .headline5!
+//               //     .copyWith(color: context.theme.onPrimary),
+//             ),
+//           ],
+//         );
+//     return Column(
+//       children: [
+//         const SizedBox(height: 10),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: Text('Products',
+//                   style: Theme.of(context).textTheme.caption!.copyWith(
+//                       //color: context.theme.onSecondaryContainer
+//                       )),
+//             ),
+//             Row(
+//               mainAxisSize: MainAxisSize.min,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 buildOneItem(
+//                   label: 'Amount',
+//                   value: 98740.0,
+//                   withDollarsign: true,
+//                 ),
+//                 const SizedBox(width: 21),
+//                 buildOneItem(
+//                   label: 'Items',
+//                   value: 98740.0,
+//                   withDollarsign: false,
+//                 ),
+//                 const SizedBox(width: 21),
+//                 buildOneItem(
+//                   label: 'Quantity',
+//                   value: 740,
+//                   withDollarsign: false,
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(width: 8),
+//           ],
+//         ),
+//         const SizedBox(height: 15),
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: Text('Services',
+//                   style: Theme.of(context).textTheme.caption!.copyWith(
+//                       //color: context.theme.onSecondaryContainer,
+//                       )),
+//             ),
+//             Row(
+//               mainAxisSize: MainAxisSize.min,
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 buildOneItem(
+//                   label: 'Amount',
+//                   value: 98740.0,
+//                   withDollarsign: true,
+//                 ),
+//                 const SizedBox(width: 21),
+//                 buildOneItem(
+//                   label: 'Items',
+//                   value: 98740.0,
+//                   withDollarsign: false,
+//                 ),
+//                 const SizedBox(width: 21),
+//                 buildOneItem(
+//                   label: 'Quantity',
+//                   value: 740,
+//                   withDollarsign: false,
+//                 ),
+//               ],
+//             ),
+//             const SizedBox(width: 8),
+//           ],
+//         ),
+//       ],
+//     );
+//   }
+// }

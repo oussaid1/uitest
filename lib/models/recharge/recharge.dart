@@ -78,6 +78,11 @@ class RechargeModel {
     return 'RachargeModel(id: $id, oprtr: $oprtr, percntg: $percntg, amount: $amount, qnt: $qntt, date: $date,)';
   }
 
+//////////////////////////////////////////////////// get the recharge amount for a given amount
+  num get netProfit {
+    return (amount * percntg) / 100;
+  }
+
   /// a list  of 20 fake data to be used for testing
   static List<RechargeModel> get fakeData => [
         RechargeModel(
@@ -86,7 +91,7 @@ class RechargeModel {
           percntg: 7.5,
           amount: 10,
           qntt: 25,
-          date: DateTime.now(),
+          date: DateTime.now().subtract(Duration(days: 2)),
         ),
         RechargeModel(
           id: '2',
@@ -102,14 +107,14 @@ class RechargeModel {
           percntg: 7.5,
           amount: 10,
           qntt: 25,
-          date: DateTime.now(),
+          date: DateTime.now().subtract(Duration(days: 4)),
         ),
         RechargeModel(
           id: '4',
           oprtr: RechargeOperator.orange,
           percntg: 7.5,
           amount: 10,
-          qntt: 25,
+          qntt: 32,
           date: DateTime.now(),
         ),
         RechargeModel(
@@ -117,7 +122,7 @@ class RechargeModel {
           oprtr: RechargeOperator.inwi,
           percntg: 6.5,
           amount: 20,
-          qntt: 16,
+          qntt: 2,
           date: DateTime.now(),
         ),
         RechargeModel(
@@ -125,15 +130,15 @@ class RechargeModel {
           oprtr: RechargeOperator.inwi,
           percntg: 7.5,
           amount: 10,
-          qntt: 25,
-          date: DateTime.now(),
+          qntt: 2,
+          date: DateTime.now().add(Duration(days: 2)),
         ),
         RechargeModel(
           id: '7',
           oprtr: RechargeOperator.orange,
           percntg: 7.5,
           amount: 10,
-          qntt: 25,
+          qntt: 18,
           date: DateTime.now(),
         ),
       ];
@@ -168,13 +173,13 @@ class RechargeModel {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////
-class RechargeSale extends RechargeModel {
+class RechargeSaleModel extends RechargeModel {
   String? rSId;
   num qnttSld;
   DateTime dateSld;
   String? clntID;
   String? soldRchrgId;
-  RechargeSale({
+  RechargeSaleModel({
     this.clntID,
     this.rSId,
     required this.qnttSld,
@@ -190,7 +195,7 @@ class RechargeSale extends RechargeModel {
           date: rechargeModel?.date ?? DateTime.now(),
         );
 
-  RechargeSale copyRSWith({
+  RechargeSaleModel copyRSWith({
     String? clntID,
     String? rSId,
     String? soldRchrgId,
@@ -198,7 +203,7 @@ class RechargeSale extends RechargeModel {
     DateTime? dateSld,
     RechargeModel? rchgMdl,
   }) {
-    return RechargeSale(
+    return RechargeSaleModel(
       clntID: clntID ?? this.clntID,
       rSId: rSId ?? this.rSId,
       soldRchrgId: soldRchrgId ?? this.soldRchrgId,
@@ -240,8 +245,8 @@ class RechargeSale extends RechargeModel {
     );
   }
 
-  factory RechargeSale.fromDocument(DocumentSnapshot map) {
-    return RechargeSale(
+  factory RechargeSaleModel.fromDocument(DocumentSnapshot map) {
+    return RechargeSaleModel(
       clntID: map['clntID'],
       soldRchrgId: map['soldRchrgId'],
       rSId: map['rchgSlId'],
@@ -251,8 +256,8 @@ class RechargeSale extends RechargeModel {
   }
 
   /// fromMap()
-  factory RechargeSale.fromMap(Map<String, dynamic> map) {
-    return RechargeSale(
+  factory RechargeSaleModel.fromMap(Map<String, dynamic> map) {
+    return RechargeSaleModel(
       clntID: map['clntID'],
       soldRchrgId: map['soldRchrgId'],
       rSId: map['rchgSlId'],
@@ -263,35 +268,63 @@ class RechargeSale extends RechargeModel {
 
   @override
   String toJson() => json.encode(toMap());
-  factory RechargeSale.fromJson(String source) =>
-      RechargeSale.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory RechargeSaleModel.fromJson(String source) =>
+      RechargeSaleModel.fromMap(json.decode(source) as Map<String, dynamic>);
   @override
   String toString() {
     return 'RechargeSale(clntID: $clntID, rchgSlId: $rSId, qnttSld: $qnttSld, dateSld: $dateSld)';
   }
 
+///////////////////////////////////////////////////////////
+  /// get total amount of the sale of the recharge
+  /// @return num [amount * quantitySold]total amount of the sale of the recharge
+  num get totalAmount {
+    return amount * qnttSld;
+  }
+
   /// fake data to be used for testing
-  static List<RechargeSale> get fakeData => [
-        RechargeSale(
+  static List<RechargeSaleModel> get fakeData => [
+        RechargeSaleModel(
           clntID: '1',
           soldRchrgId: '1',
           rSId: '1',
           qnttSld: 1,
           dateSld: DateTime.now(),
         ),
-        RechargeSale(
+        RechargeSaleModel(
           clntID: '2',
           soldRchrgId: '2',
           rSId: '2',
           qnttSld: 2,
-          dateSld: DateTime.now(),
+          dateSld: DateTime.now().add(Duration(days: 4)),
         ),
-        RechargeSale(
+        RechargeSaleModel(
           clntID: '3',
           soldRchrgId: '3',
           rSId: '3',
           qnttSld: 3,
-          dateSld: DateTime.now(),
+          dateSld: DateTime.now().add(Duration(days: 1)),
+        ),
+        RechargeSaleModel(
+          clntID: '3',
+          soldRchrgId: '3',
+          rSId: '3',
+          qnttSld: 5,
+          dateSld: DateTime.now().add(Duration(days: 1)),
+        ),
+        RechargeSaleModel(
+          clntID: '4',
+          soldRchrgId: '4',
+          rSId: '4',
+          qnttSld: 4,
+          dateSld: DateTime.now().add(Duration(days: 2)),
+        ),
+        RechargeSaleModel(
+          clntID: '5',
+          soldRchrgId: '5',
+          rSId: '5',
+          qnttSld: 5,
+          dateSld: DateTime.now().add(Duration(days: 3)),
         ),
       ];
 }

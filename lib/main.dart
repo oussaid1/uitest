@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:uitest/autocomplete.dart';
-import 'package:uitest/screens/recharge/recharge_list.dart';
+import 'package:uitest/screens/recharge/stock/recharges_view.dart';
 import 'package:uitest/screens/splash.dart';
 import 'package:uitest/theme.dart';
 import 'package:uitest/widgets/addstuff_fab.dart';

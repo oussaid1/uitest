@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'recharge_list.dart';
-import 'sales_recharge.dart';
+import 'stock/recharges_view.dart';
+import 'sales/recharge_sales_view.dart';
 
 class RechargeTab extends StatelessWidget {
   const RechargeTab({Key? key}) : super(key: key);
@@ -50,7 +50,7 @@ class RechargeTab extends StatelessWidget {
         ),
         body: const TabBarView(
           children: [
-            RechargeStock(),
+            RechargeStockView(),
             RechargeSalesView(),
           ],
         ),

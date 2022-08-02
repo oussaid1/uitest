@@ -9,7 +9,7 @@ import '../../models/recharge/recharge.dart';
 import '../../theme.dart';
 import '../../widgets/date_picker.dart';
 import '../../widgets/number_incrementer.dart';
-import 'recharge.dart';
+import 'recharge_card_widget.dart';
 
 class AddRechargeWidget extends StatefulWidget {
   final RechargeModel? recharge;
