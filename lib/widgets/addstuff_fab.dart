@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uitest/models/recharge/recharge.dart';
 import 'package:uitest/widgets/add_payment.dart';
+import 'package:uitest/widgets/add_suplier.dart';
 
 import '../popups.dart';
 import '../screens/recharge/add_recharge.dart';
@@ -24,6 +25,8 @@ class AddStuffWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         buildExpandedFab(context, title: "Client", child: const AddClient()),
+        const SizedBox(height: 10),
+        buildExpandedFab(context, title: "Suplier", child: const AddSuplier()),
         const SizedBox(height: 10),
         buildExpandedFab(context,
             title: "Recharge",
@@ -84,17 +87,20 @@ class AddStuffWidget extends StatelessWidget {
           )),
         );
       },
-      label: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.add, size: 18),
-          const SizedBox(width: 5),
-          Text(title ?? '',
-              style: Theme.of(context).textTheme.headline3!.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  )),
-        ],
+      label: SizedBox(
+        width: 120,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.add, size: 18),
+            const SizedBox(width: 5),
+            Text(title ?? '',
+                style: Theme.of(context).textTheme.headline3!.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    )),
+          ],
+        ),
       ),
     );
   }

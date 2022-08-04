@@ -131,108 +131,108 @@ class _SearchByWidgetState extends State<SearchByWidget> {
   }
 }
 
-class SearchCategorySpinner extends StatefulWidget {
-  const SearchCategorySpinner({
-    Key? key,
-    this.list,
-    required this.onChanged,
-    this.validator,
-    this.initialItem,
-  }) : super(key: key);
-  final List<String>? list;
-  final void Function(String) onChanged;
-  final String? Function(String?)? validator;
+// class SearchCategorySpinnner extends StatefulWidget {
+//   const SearchCategorySpinner({
+//     Key? key,
+//     this.list,
+//     required this.onChanged,
+//     this.validator,
+//     this.initialItem,
+//   }) : super(key: key);
+//   final List<String>? list;
+//   final void Function(String) onChanged;
+//   final String? Function(String?)? validator;
 
-  final String? initialItem;
+//   final String? initialItem;
 
-  @override
-  State<SearchCategorySpinner> createState() => _SearchCategorySpinnerState();
-}
+//   @override
+//   State<SearchCategorySpinner> createState() => _SearchCategorySpinnerState();
+// }
 
-class _SearchCategorySpinnerState extends State<SearchCategorySpinner> {
-  late List<String> fruits;
-  void initialize() {
-    fruits = widget.list ?? [];
-    // (widget.initialItem != null && !fruits.contains(widget.initialItem))
-    // (widget.initialItem != null &&
-    //         !fruits.toLowerCase().contains(widget.initialItem!.toLowerCase()))
-    //     ? fruits.add(widget.initialItem!)
-    //     : null;
-  }
+// class _SearchCategorySpinnerState extends State<SearchCategorySpinner> {
+//   late List<String> fruits;
+//   void initialize() {
+//     fruits = widget.list ?? [];
+//     // (widget.initialItem != null && !fruits.contains(widget.initialItem))
+//     // (widget.initialItem != null &&
+//     //         !fruits.toLowerCase().contains(widget.initialItem!.toLowerCase()))
+//     //     ? fruits.add(widget.initialItem!)
+//     //     : null;
+//   }
 
-  @override
-  void initState() {
-    initialize();
-    super.initState();
-  }
+//   @override
+//   void initState() {
+//     initialize();
+//     super.initState();
+//   }
 
-  @override
-  void dispose() {
-    formkey.currentState!.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     formkey.currentState!.dispose();
+//     super.dispose();
+//   }
 
-  /// form key for the form field
-  final formkey = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 220.0,
-      child: Container(
-        child: DropdownButtonHideUnderline(
-          child: ButtonTheme(
-            alignedDropdown: true,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Form(
-              key: formkey,
-              child: DropdownButtonFormField<String>(
-                  isDense: true,
-                  elevation: 4,
-                  dropdownColor: const Color(0xff38B2F7),
-                  focusColor: const Color.fromARGB(0, 255, 255, 255),
-                  iconSize: 30,
-                  icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                  isExpanded: true,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: widget.validator,
-                  hint: Text(
-                    'Search by'.tr(),
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                          color: context.theme.primary,
-                        ),
-                  ),
-                  value: widget.initialItem, //selecrtedValue,
-                  onChanged: (value) {
-                    widget.onChanged(value!);
-                    formkey.currentState!.validate();
-                  },
-                  items: fruits
-                      .toSet()
-                      .map((itemName) {
-                        return DropdownMenuItem<String>(
-                          value: itemName,
-                          child: SizedBox(
-                            width: 100,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 4.0, right: 4),
-                              child: Text(
-                                itemName,
-                                textAlign: TextAlign.start,
-                                style: Theme.of(context).textTheme.subtitle2!,
-                              ),
-                            ),
-                          ),
-                        );
-                      })
-                      .toSet()
-                      .toList()),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   /// form key for the form field
+//   final formkey = GlobalKey<FormState>();
+//   @override
+//   Widget build(BuildContext context) {
+//     return SizedBox(
+//       width: 220.0,
+//       child: Container(
+//         child: DropdownButtonHideUnderline(
+//           child: ButtonTheme(
+//             alignedDropdown: true,
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(6),
+//             ),
+//             child: Form(
+//               key: formkey,
+//               child: DropdownButtonFormField<String>(
+//                   isDense: true,
+//                   elevation: 4,
+//                   dropdownColor: const Color(0xff38B2F7),
+//                   focusColor: const Color.fromARGB(0, 255, 255, 255),
+//                   iconSize: 30,
+//                   icon: const Icon(Icons.keyboard_arrow_down_sharp),
+//                   isExpanded: true,
+//                   autovalidateMode: AutovalidateMode.onUserInteraction,
+//                   validator: widget.validator,
+//                   hint: Text(
+//                     'Search by'.tr(),
+//                     style: Theme.of(context).textTheme.headline6!.copyWith(
+//                           color: context.theme.primary,
+//                         ),
+//                   ),
+//                   value: widget.initialItem, //selecrtedValue,
+//                   onChanged: (value) {
+//                     widget.onChanged(value!);
+//                     formkey.currentState!.validate();
+//                   },
+//                   items: fruits
+//                       .toSet()
+//                       .map((itemName) {
+//                         return DropdownMenuItem<String>(
+//                           value: itemName,
+//                           child: SizedBox(
+//                             width: 100,
+//                             child: Padding(
+//                               padding:
+//                                   const EdgeInsets.only(left: 4.0, right: 4),
+//                               child: Text(
+//                                 itemName,
+//                                 textAlign: TextAlign.start,
+//                                 style: Theme.of(context).textTheme.subtitle2!,
+//                               ),
+//                             ),
+//                           ),
+//                         );
+//                       })
+//                       .toSet()
+//                       .toList()),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -9,9 +9,12 @@ import 'package:uitest/models/recharge/recharge_viewmodel.dart';
 import 'package:uitest/models/recharge/recharges_data.dart';
 import 'package:uitest/screens/recharge/sell_recharge.dart';
 import 'package:uitest/search_by_widget.dart';
+import '../../../expandable_fab.dart';
+import '../../../models/recharge/filtered_recharges.dart';
 import '../../../popups.dart';
 import '../add_recharge.dart';
 import 'recharge_charts.dart';
+import 'recharge_stock_iventory.dart';
 
 class RechargeStockView extends StatelessWidget {
   const RechargeStockView({
@@ -24,9 +27,20 @@ class RechargeStockView extends StatelessWidget {
         shopClients: ShopClientModel.fakeClients,
         rechargeList: RechargeModel.fakeData,
         rechargeSalesList: RechargeSaleModel.fakeData);
-    RechargesData data = RechargesData(rechargesList: RechargeModel.fakeData);
+    RechargeData data = RechargeData(rechargesList: RechargeModel.fakeData);
+    FilteredRecharges filteredRecharges = FilteredRecharges(
+      rechargeList: RechargeModel.fakeData,
+    );
+    RechargeData data1 = RechargeData(
+      rechargesList: RechargeModel.fakeData,
+    );
     List<ShopClientRechargesData> shopClientRechargesData =
         viewModel.shopClientCombinedRechargeSales;
+    var inwiOrangeIam = [
+      data1.oprtrRechargeChartData('inwi', filteredRecharges.inwiList),
+      data1.oprtrRechargeChartData('orange', filteredRecharges.orangeList),
+      data1.oprtrRechargeChartData('iam', filteredRecharges.iamList)
+    ];
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -34,6 +48,7 @@ class RechargeStockView extends StatelessWidget {
             runSpacing: 15,
             spacing: 15,
             children: [
+              RechargeOverAllWidget(data: inwiOrangeIam),
               BluredContainer(
                 height: 300,
                 width: 420,
@@ -167,26 +182,26 @@ class RechargeListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       startActionPane: ActionPane(motion: const ScrollMotion(), children: [
-        // ActionButton(
-        //   icon: const Icon(Icons.edit),
-        //   onPressed: () => onEdit(recharge),
-        // ),
-        IconButton(
-          icon: const Icon(
-            Icons.edit,
-          ),
-          onPressed: () {
-            onEdit(recharge);
-          },
+        SlidableAction(
+          onPressed: (_) => onEdit(recharge),
+          backgroundColor: Color.fromARGB(255, 73, 254, 163),
+          foregroundColor: Color.fromARGB(255, 255, 255, 255),
+          borderRadius: BorderRadius.circular(10),
+          icon: Icons.edit,
+          label: 'Edit',
         ),
       ]),
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
-        IconButton(
-          icon: const Icon(Icons.delete_forever_outlined,
-              color: Color.fromARGB(206, 244, 67, 54)),
-          onPressed: () {
-            onDelete(recharge);
-          },
+        SlidableAction(
+          onPressed: (_) => onDelete(recharge),
+          backgroundColor: Color.fromARGB(255, 255, 0, 0),
+          foregroundColor: Color.fromARGB(255, 255, 255, 255),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          spacing: 8,
+          autoClose: true,
+          borderRadius: BorderRadius.circular(10),
+          icon: Icons.delete,
+          label: 'Delete',
         ),
       ]),
       child: InkWell(

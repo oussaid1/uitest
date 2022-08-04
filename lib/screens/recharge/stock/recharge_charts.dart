@@ -5,10 +5,10 @@ import 'package:uitest/extentions.dart';
 import 'package:uitest/models/recharge/recharge.dart';
 import '../../../theme.dart';
 
-class RechargePieChartData {
+class RechargeChartData {
   String? label;
   List<RechargeModel>? list;
-
+  DateTime? date;
   Color? get color {
     if (list == null) {
       return null;
@@ -25,9 +25,10 @@ class RechargePieChartData {
     }
   }
 
-  RechargePieChartData({
+  RechargeChartData({
     required this.label,
     required this.list,
+    required this.date,
   });
   num get amount {
     return list?.fold(0, (num sum, e) => sum + e.amount) as num;
@@ -41,13 +42,21 @@ class RechargePieChartData {
     return list?.fold(0, (num sum, e) => sum + e.netProfit) as num;
   }
 
+  num get netProfit {
+    return list?.fold(0, (num sum, e) => sum + e.netProfit) as num;
+  }
+
   num get quantity {
     return list?.fold(0, (num sum, e) => sum + e.qntt) as num;
+  }
+
+  num get total {
+    return list?.fold(0, (num sum, e) => sum + (e.amount) * e.qntt) as num;
   }
 }
 
 class RechargePieChart extends StatelessWidget {
-  final List<RechargePieChartData> data;
+  final List<RechargeChartData> data;
   final String title;
   const RechargePieChart({
     Key? key,
@@ -87,19 +96,18 @@ class RechargePieChart extends StatelessWidget {
   }
 
   ///Get the default circular series
-  List<DoughnutSeries<RechargePieChartData, String>>
-      _getDefaultDoughnutSeries() {
-    return <DoughnutSeries<RechargePieChartData, String>>[
-      DoughnutSeries<RechargePieChartData, String>(
+  List<DoughnutSeries<RechargeChartData, String>> _getDefaultDoughnutSeries() {
+    return <DoughnutSeries<RechargeChartData, String>>[
+      DoughnutSeries<RechargeChartData, String>(
           radius: '80%',
           explode: true,
           explodeOffset: '20%',
           dataSource: data,
           legendIconType: LegendIconType.horizontalLine,
-          pointColorMapper: (RechargePieChartData data, _) => data.color,
-          xValueMapper: (RechargePieChartData data, _) => data.label as String,
-          yValueMapper: (RechargePieChartData data, _) => data.quantity,
-          dataLabelMapper: (RechargePieChartData data, _) => data.label,
+          pointColorMapper: (RechargeChartData data, _) => data.color,
+          xValueMapper: (RechargeChartData data, _) => data.label as String,
+          yValueMapper: (RechargeChartData data, _) => data.quantity,
+          dataLabelMapper: (RechargeChartData data, _) => data.label,
           enableTooltip: true,
           dataLabelSettings: const DataLabelSettings(
             isVisible: false,
@@ -111,7 +119,7 @@ class RechargePieChart extends StatelessWidget {
 }
 
 class RechargeBarChart extends StatelessWidget {
-  final List<RechargePieChartData> data;
+  final List<RechargeChartData> data;
   final String title;
   const RechargeBarChart({
     Key? key,
@@ -176,25 +184,24 @@ class RechargeBarChart extends StatelessWidget {
               minorTickLines: const MinorTickLines(width: 0),
             ),
             series: <ChartSeries>[
-              ColumnSeries<RechargePieChartData, String>(
+              ColumnSeries<RechargeChartData, String>(
                   name: 'Quantity'.tr(),
                   color: Color.fromARGB(255, 39, 87, 176),
                   dataSource: data,
-                  xValueMapper: (RechargePieChartData data, _) => data.label,
-                  yValueMapper: (RechargePieChartData data, z) =>
-                      data.quantity),
-              ColumnSeries<RechargePieChartData, String>(
+                  xValueMapper: (RechargeChartData data, _) => data.label,
+                  yValueMapper: (RechargeChartData data, z) => data.quantity),
+              ColumnSeries<RechargeChartData, String>(
                   name: 'Amount'.tr(),
                   color: Color.fromARGB(253, 0, 177, 103),
                   dataSource: data,
-                  xValueMapper: (RechargePieChartData data, _) => data.label,
-                  yValueMapper: (RechargePieChartData data, z) => data.amount),
-              ColumnSeries<RechargePieChartData, String>(
+                  xValueMapper: (RechargeChartData data, _) => data.label,
+                  yValueMapper: (RechargeChartData data, z) => data.amount),
+              ColumnSeries<RechargeChartData, String>(
                   name: 'Profit'.tr(),
                   color: Color.fromARGB(255, 243, 33, 79),
                   dataSource: data,
-                  xValueMapper: (RechargePieChartData data, _) => data.label,
-                  yValueMapper: (RechargePieChartData data, z) => data.profit),
+                  xValueMapper: (RechargeChartData data, _) => data.label,
+                  yValueMapper: (RechargeChartData data, z) => data.profit),
             ],
           ),
         ),

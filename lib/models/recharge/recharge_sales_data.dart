@@ -1,5 +1,5 @@
-import '../../screens/recharge/stock/recharge_charts.dart';
 import '../../screens/recharge/sales/recharge_sales_chats.dart';
+import '../../screens/recharge/stock/recharge_charts.dart';
 import '../chart_data.dart';
 import 'recharge.dart';
 
@@ -75,8 +75,8 @@ class RechargeSalesData {
 
 //////////////////////////////////////////////////////////////////////////
   /// get the recharge amount for each operator ///////////////////////////////
-  Map<String, List<RechargeModel>> get oprtrRechargeAmntStck {
-    Map<String, List<RechargeModel>> map = {};
+  Map<String, List<RechargeSaleModel>> get oprtrRechargeAmntStck {
+    Map<String, List<RechargeSaleModel>> map = {};
     for (RechargeSaleModel r in allRechargeSales) {
       map[r.oprtr.name] ??= [];
       map[r.oprtr.name]!.add(r);
@@ -85,12 +85,13 @@ class RechargeSalesData {
   }
 
   /// get the recharge amount for each operator as a list of chartdata ///////////////////////////////
-  List<RechargePieChartData> get oprtrRechargeAmntStckList {
-    List<RechargePieChartData> list = [];
+  List<RechargeSaleChartData> get oprtrRechargeAmntStckList {
+    List<RechargeSaleChartData> list = [];
     for (String key in oprtrRechargeAmntStck.keys) {
-      list.add(RechargePieChartData(
+      list.add(RechargeSaleChartData(
         label: key,
         list: oprtrRechargeAmntStck[key],
+        date: DateTime.now(),
       ));
     }
     return list;
@@ -179,6 +180,15 @@ class RechargeSalesData {
   RechargeSaleChartData oprtrRechargeSaleChartData(
       String label, List<RechargeSaleModel> list) {
     return RechargeSaleChartData(
+      label: label,
+      list: list,
+      date: DateTime.now(),
+    );
+  }
+
+  RechargeChartData oprtrRechargeChartData(
+      String label, List<RechargeModel> list) {
+    return RechargeChartData(
       label: label,
       list: list,
       date: DateTime.now(),

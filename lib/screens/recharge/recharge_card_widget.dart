@@ -43,8 +43,8 @@ class _RechargeOperatorRadioWidgetState
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         _buildRadioOperator(
           context,

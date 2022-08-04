@@ -56,51 +56,30 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: context.width,
-      height: context.height,
-      child: Column(
-        children: [
-          //InStockWidget(dBSupliers: dBSupliers),
-          buildFlexible(context, ref),
-        ],
-      ),
-    );
-  }
-
-  Flexible buildFlexible(BuildContext context, WidgetRef ref) {
-    return Flexible(
-      fit: FlexFit.tight,
-      flex: 2,
-      child: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(8),
-          width: Responsive.isDesktop(context) ? 600 : context.width - 10,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            //color: Theme.of(context).colorScheme.onBackground,
-          ),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                buildSuplierName(ref),
-                const SizedBox(height: 20),
-                buildSuplierPhone(ref),
-                const SizedBox(height: 20),
-                buildSuplierEmail(ref),
-                const SizedBox(height: 20),
-                buildLocation(ref, context),
-                const SizedBox(height: 40),
-                buildSaveButton(ref, context),
-                const SizedBox(height: 100) //but
-              ],
-            ),
+    return SingleChildScrollView(
+      child: Form(
+        key: formKey,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              buildSuplierName(ref),
+              const SizedBox(height: 20),
+              buildSuplierPhone(ref),
+              const SizedBox(height: 20),
+              buildSuplierEmail(ref),
+              const SizedBox(height: 20),
+              buildLocation(ref, context),
+              const SizedBox(height: 40),
+              buildSaveButton(ref, context),
+              const SizedBox(height: 100) //but
+            ],
           ),
         ),
       ),

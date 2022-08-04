@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:uitest/extentions.dart';
-import 'package:uitest/glass_widgets.dart';
 import 'package:uitest/models/recharge/recharge.dart';
 import '../../../theme.dart';
 
@@ -107,10 +106,12 @@ class RechargeSalePieChart extends StatelessWidget {
           xValueMapper: (RechargeSaleChartData data, _) => data.label as String,
           yValueMapper: (RechargeSaleChartData data, _) => data.quantitySold,
           dataLabelMapper: (RechargeSaleChartData data, _) => data.label,
+          enableTooltip: true,
           dataLabelSettings: const DataLabelSettings(
             isVisible: false,
             alignment: ChartAlignment.far,
             angle: -45,
+            useSeriesColor: true,
           )),
     ];
   }

@@ -34,7 +34,7 @@ class RechargeSalesView extends StatelessWidget {
         recghargeViewModel.combinedRechargeList;
 
     /// this is a list of [RechargeSalesModel] after being filtered by [DateFilter]
-    FilteredRecharges filteredRecharges = FilteredRecharges(
+    FilteredRechargesSales filteredRecharges = FilteredRechargesSales(
       fullRechargeList: fullRechargeSales,
     );
     RechargeSalesData data = RechargeSalesData(
@@ -221,26 +221,31 @@ class RechargeSaleListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       startActionPane: ActionPane(motion: const ScrollMotion(), children: [
-        // ActionButton(
-        //   icon: const Icon(Icons.edit),
-        //   onPressed: () => onEdit(recharge),
-        // ),
-        IconButton(
-          icon: const Icon(
-            Icons.edit,
-          ),
-          onPressed: () {
-            onEdit(recharge);
-          },
+        SlidableAction(
+          onPressed: (_) => onEdit(recharge),
+          backgroundColor: Color.fromARGB(255, 73, 254, 163),
+          foregroundColor: Color.fromARGB(134, 255, 255, 255),
+          borderRadius: BorderRadius.circular(10),
+          icon: Icons.edit,
+          label: 'Edit',
+        ),
+        SlidableAction(
+          onPressed: (_) => onEdit(recharge),
+          backgroundColor: Color.fromARGB(255, 254, 191, 73),
+          foregroundColor: Color.fromARGB(134, 255, 255, 255),
+          borderRadius: BorderRadius.circular(10),
+          icon: Icons.money_off_csred,
+          label: 'Unsell',
         ),
       ]),
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
-        IconButton(
-          icon: const Icon(Icons.delete_forever_outlined,
-              color: Color.fromARGB(206, 244, 67, 54)),
-          onPressed: () {
-            onDelete(recharge);
-          },
+        SlidableAction(
+          onPressed: (_) => onDelete(recharge),
+          backgroundColor: Color.fromARGB(255, 255, 0, 0),
+          foregroundColor: Color.fromARGB(134, 255, 255, 255),
+          borderRadius: BorderRadius.circular(10),
+          icon: Icons.delete,
+          label: 'Delete',
         ),
       ]),
       child: InkWell(
