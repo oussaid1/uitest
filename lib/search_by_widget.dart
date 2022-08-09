@@ -98,15 +98,15 @@ class _SearchByWidgetState extends State<SearchByWidget> {
                 decoration: InputDecoration(
                   disabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
+                        //    color: Colors.transparent,
+                        ),
                   ),
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(6),
                       borderSide: const BorderSide(
-                        //  color: Colors.transparent,
-                        color: Colors.transparent,
-                      )),
+                          //  color: Colors.transparent,
+//color: Colors.transparent,
+                          )),
                   suffixIcon: const Icon(
                     Icons.search_outlined,
                     size: 18,
@@ -116,8 +116,8 @@ class _SearchByWidgetState extends State<SearchByWidget> {
                       const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
                   border: const OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Colors.transparent,
-                    ),
+                        //      color: Colors.transparent,
+                        ),
                   ),
                   filled: true,
                   fillColor: AppConstants.whiteOpacity,

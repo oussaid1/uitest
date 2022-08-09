@@ -27,9 +27,11 @@ class MThemeData {
   ///static const secondaryColor = Color(0xFF43CEA2);
   ////////////////////
   static const accentColor = Color(0xFF038C8C);
-  static const primaryColor = Color.fromARGB(255, 1, 112, 122);
+  static const primaryColor = Color(0xFF01707A);
   static const secondaryColor = Color.fromARGB(255, 0, 191, 212);
   static const onSecondary = Color(0xFFD9D4D0);
+  static const background = Color(0xFFEFCECE);
+  static const surface = Color(0xFFCC9B9B);
   static const onPrimary = Color(0xFF00C788);
 // black and white
   static const black = Color(0xFF000000);
@@ -44,8 +46,8 @@ class MThemeData {
     primaryContainer: primaryColor,
     secondary: secondaryColor,
     secondaryContainer: secondaryColor,
-    background: almostWhiteColor,
-    surface: white,
+    background: background,
+    surface: surface,
     onBackground: white,
     error: _lightFillColor,
     onError: _lightFillColor,

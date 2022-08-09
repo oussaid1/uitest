@@ -47,172 +47,158 @@ class _AppState extends State<App> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-            // colorFilter:
-            //     ColorFilter.mode(Color.fromARGB(43, 0, 0, 0), BlendMode.darken),
-            image: AssetImage(
-              'assets/images/background1.jpg',
-              // bundle: AssetBundle,/// TODO: fix this, read docs
-            ),
-            fit: BoxFit.cover,
-          ),
-          //gradient: MThemeData.gradient1,
-          color: Colors.transparent),
-      child: Row(
-        children: <Widget>[
-          LayoutBuilder(
-            builder: (context, constraint) {
-              return SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraint.maxHeight),
-                  child: IntrinsicHeight(
-                    child: NavigationRail(
-                      backgroundColor: Colors.white.withOpacity(0.5),
-                      selectedIndex: _selectedIndex,
-                      onDestinationSelected: (int index) {
-                        setState(() {
-                          _selectedIndex = index;
-                        });
-                      },
-                      labelType: NavigationRailLabelType.selected,
-                      destinations: const [
-                        NavigationRailDestination(
-                          icon: Icon(Icons.star_border),
-                          selectedIcon: Icon(Icons.star),
-                          label: Text('Third'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.bookmark_border),
-                          selectedIcon: Icon(Icons.book),
-                          label: Text('Second'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.star_border),
-                          selectedIcon: Icon(Icons.star),
-                          label: Text('Third'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.favorite_border),
-                          selectedIcon: Icon(Icons.favorite),
-                          label: Text('First'),
-                        ),
-                        NavigationRailDestination(
-                          icon: Icon(Icons.star_border),
-                          selectedIcon: Icon(Icons.star),
-                          label: Text('Third'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-          const VerticalDivider(thickness: 1, width: 1),
-          const SizedBox(width: 20),
-          Expanded(
-            child: DefaultTabController(
-              length: 5,
-              child: Scaffold(
-                backgroundColor: Colors.transparent,
-                floatingActionButtonLocation:
-                    FloatingActionButtonLocation.endDocked,
-                floatingActionButton: const Padding(
-                  padding: EdgeInsets.only(bottom: 80.0),
-                  child: ExpandableFab(
-                    distance: 0,
-                    children: [
-                      AddStuffWidget(),
-                    ],
-                  ),
-                ),
-                appBar: AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () {
-                        final productsData =
-                            ProductData(products: ProductModel.fakeData);
-                        log('productsData: ${productsData.pricesByCategory}');
-                      },
-                    ),
-                  ],
-                  flexibleSpace: const TabBar(
-                    physics: NeverScrollableScrollPhysics(),
-                    splashFactory: NoSplash.splashFactory,
-                    labelStyle: TextStyle(fontSize: 18),
-                    indicatorColor: Colors.transparent,
-                    labelColor: Color.fromARGB(255, 254, 242, 255),
-                    //unselectedLabelColor: Colors.black,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    labelPadding: EdgeInsets.symmetric(horizontal: 80),
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    //indicatorPadding: const EdgeInsets.symmetric(horizontal: 8),
-                    //splashBorderRadius: const BorderRadius.all(Radius.circular(6)),
-
-                    indicator: BoxDecoration(
-                      color: Color.fromARGB(50, 255, 255, 255),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
+    return Row(
+      children: <Widget>[
+        LayoutBuilder(
+          builder: (context, constraint) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraint.maxHeight),
+                child: IntrinsicHeight(
+                  child: NavigationRail(
+                    backgroundColor: Colors.white.withOpacity(0.5),
+                    selectedIndex: _selectedIndex,
+                    onDestinationSelected: (int index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    labelType: NavigationRailLabelType.selected,
+                    destinations: const [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.star_border),
+                        selectedIcon: Icon(Icons.star),
+                        label: Text('Third'),
                       ),
-                    ),
-                    isScrollable: false,
-                    tabs: [
-                      Tab(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text("Dashboard"),
-                        ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.bookmark_border),
+                        selectedIcon: Icon(Icons.book),
+                        label: Text('Second'),
                       ),
-                      Tab(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text("Debts"),
-                        ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.star_border),
+                        selectedIcon: Icon(Icons.star),
+                        label: Text('Third'),
                       ),
-                      Tab(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text("Product"),
-                        ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.favorite_border),
+                        selectedIcon: Icon(Icons.favorite),
+                        label: Text('First'),
                       ),
-                      Tab(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text("Test"),
-                        ),
-                      ),
-                      Tab(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Text("Recharges"),
-                        ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.star_border),
+                        selectedIcon: Icon(Icons.star),
+                        label: Text('Third'),
                       ),
                     ],
                   ),
                 ),
-                body: TabBarView(
+              ),
+            );
+          },
+        ),
+        const VerticalDivider(thickness: 1, width: 1),
+        const SizedBox(width: 20),
+        Expanded(
+          child: DefaultTabController(
+            length: 5,
+            child: Scaffold(
+              //  backgroundColor: Colors.transparent,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.endDocked,
+              floatingActionButton: const Padding(
+                padding: EdgeInsets.only(bottom: 80.0),
+                child: ExpandableFab(
+                  distance: 0,
                   children: [
-                    const DashboardPage(),
-                    const DebtsView(),
-                    BlocProvider(
-                        create: (context) => DateFilterBloc(),
-                        child: const HomePage()),
-                    //MyNavBarWidget(),
-                    const MyWidget(),
-                    const RechargeTab()
+                    AddStuffWidget(),
                   ],
                 ),
               ),
+              appBar: AppBar(
+                //   backgroundColor: Colors.transparent,
+                elevation: 0,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.settings),
+                    onPressed: () {
+                      final productsData =
+                          ProductData(products: ProductModel.fakeData);
+                      log('productsData: ${productsData.pricesByCategory}');
+                    },
+                  ),
+                ],
+                flexibleSpace: const TabBar(
+                  physics: NeverScrollableScrollPhysics(),
+                  splashFactory: NoSplash.splashFactory,
+                  labelStyle: TextStyle(fontSize: 18),
+                  // indicatorColor: Colors.transparent,
+                  labelColor: Color.fromARGB(255, 254, 242, 255),
+                  //unselectedLabelColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelPadding: EdgeInsets.symmetric(horizontal: 80),
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  //indicatorPadding: const EdgeInsets.symmetric(horizontal: 8),
+                  //splashBorderRadius: const BorderRadius.all(Radius.circular(6)),
+
+                  indicator: BoxDecoration(
+                    color: Color.fromARGB(50, 255, 255, 255),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                  ),
+                  isScrollable: false,
+                  tabs: [
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Dashboard"),
+                      ),
+                    ),
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Debts"),
+                      ),
+                    ),
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Product"),
+                      ),
+                    ),
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Test"),
+                      ),
+                    ),
+                    Tab(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Recharges"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              body: TabBarView(
+                children: [
+                  const DashboardPage(),
+                  const DebtsView(),
+                  BlocProvider(
+                      create: (context) => DateFilterBloc(),
+                      child: const HomePage()),
+                  //MyNavBarWidget(),
+                  const MyWidget(),
+                  const RechargeTab()
+                ],
+              ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

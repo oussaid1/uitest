@@ -32,6 +32,10 @@ class AuthPageState extends State<AuthPage> {
   final usernameController = TextEditingController(text: 'test');
   final confirmPassController = TextEditingController(text: 'ssdd1122');
   final emailfocusNode = FocusNode();
+  final passwordfocusNode = FocusNode();
+  final usernamefocusNode = FocusNode();
+  final confirmPassfocusNode = FocusNode();
+  final registerFormfocusNode = FocusNode();
 
   bool _obscurepass = true;
   bool _obscureconfirmpass = true;
@@ -41,11 +45,11 @@ class AuthPageState extends State<AuthPage> {
   final _pageController = PageController(initialPage: 0);
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return const App();
-      }));
-    });
+    // Future.delayed(const Duration(seconds: 5), () {
+    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //     return const App();
+    //   }));
+    // });
     super.initState();
   }
 
@@ -81,18 +85,10 @@ class AuthPageState extends State<AuthPage> {
       height: MediaQuery.of(context).size.height,
       alignment: Alignment.center,
       decoration: const BoxDecoration(
-        image: DecorationImage(
-          colorFilter:
-              ColorFilter.mode(Color.fromARGB(43, 0, 0, 0), BlendMode.darken),
-          image: AssetImage(
-            'assets/images/background1.jpg',
-            // bundle: AssetBundle,/// TODO: fix this, read docs
-          ),
-          fit: BoxFit.cover,
-        ),
-        color: Colors.transparent,
-        //color: MThemeData.secondaryColor,
+        color: MThemeData.background,
       ),
+      //color: MThemeData.secondaryColor,
+
       //color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -244,22 +240,13 @@ class AuthPageState extends State<AuthPage> {
   buildLefttSide(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        // borderRadius: BorderRadius.only(
-        //   topLeft: Radius.circular(20),
-        //   bottomLeft: Radius.circular(20),
-        //   bottomRight: Radius.circular(0),
-        //   topRight: Radius.circular(0),
-        // ),
-        image: DecorationImage(
-          // colorFilter:
-          //     ColorFilter.mode(Color.fromARGB(43, 0, 0, 0), BlendMode.darken),
-          image: AssetImage(
-            'assets/images/background1.jpg',
-            // bundle: AssetBundle,/// TODO: fix this, read docs
-          ),
-          fit: BoxFit.cover,
-        ),
-      ),
+          // borderRadius: BorderRadius.only(
+          //   topLeft: Radius.circular(20),
+          //   bottomLeft: Radius.circular(20),
+          //   bottomRight: Radius.circular(0),
+          //   topRight: Radius.circular(0),
+          // ),
+          color: MThemeData.surface),
       height: MediaQuery.of(context).size.height,
       //color: Theme.of(context).colorScheme.primary,
       child: BluredContainer(
@@ -302,6 +289,7 @@ class AuthPageState extends State<AuthPage> {
       width: 300,
       height: 40,
       child: ElevatedButton(
+        focusNode: registerFormfocusNode,
         style: MThemeData.raisedButtonStyleSave,
         onPressed: !_canLogin
             ? null
@@ -418,7 +406,9 @@ class AuthPageState extends State<AuthPage> {
           }
           return null;
         },
-        //focusNode:  emailFocusNode ,
+        onEditingComplete: () =>
+            FocusScope.of(context).requestFocus(passwordfocusNode),
+        autofocus: true,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -448,6 +438,7 @@ class AuthPageState extends State<AuthPage> {
         controller: passController,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.next,
+        focusNode: passwordfocusNode,
         validator: (text) {
           if (text!.trim().isEmpty) {
             return "insert a valid password".tr();
@@ -455,6 +446,9 @@ class AuthPageState extends State<AuthPage> {
           return null;
         },
         obscureText: _obscurepass,
+        // focusNode: emailfocusNode,
+        onEditingComplete: () =>
+            FocusScope.of(context).requestFocus(registerFormfocusNode),
         decoration: InputDecoration(
           suffixIcon: IconButton(
             icon: !_obscurepass

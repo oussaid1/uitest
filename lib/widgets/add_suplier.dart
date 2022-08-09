@@ -1,27 +1,27 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uitest/extentions.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../models/suplier/suplier.dart';
-import '../responssive.dart';
+import '../../models/suplier/suplier.dart';
 import '../theme.dart';
 
-class AddSuplier extends ConsumerStatefulWidget {
+class AddSuplier extends StatefulWidget {
   const AddSuplier({Key? key, this.suplier}) : super(key: key);
   final SuplierModel? suplier;
   @override
   AddSuplierState createState() => AddSuplierState();
 }
 
-class AddSuplierState extends ConsumerState<AddSuplier> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-
+class AddSuplierState extends State<AddSuplier> {
+  final GlobalKey<FormState> _mformKey = GlobalKey<FormState>();
+  final TextEditingController titleController =
+      TextEditingController(text: 'Hanana');
+  final TextEditingController phoneController =
+      TextEditingController(text: '0789989898');
+  final TextEditingController emailController =
+      TextEditingController(text: 'hanana@gmail.com');
+  bool _canSave = false;
   void clear() {
     titleController.clear();
     phoneController.clear();
@@ -34,7 +34,6 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
       titleController.text = widget.suplier!.name.toString();
       phoneController.text = widget.suplier!.phone.toString();
       emailController.text = widget.suplier!.email.toString();
-      //ref.read(suplierLocationProvider.state).state = widget.suplier!.location!;
     }
     super.initState();
   }
@@ -57,27 +56,25 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _mformKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(
-                height: 50,
-              ),
-              buildSuplierName(ref),
+              const SizedBox(height: 50),
+              buildSuplierName(),
               const SizedBox(height: 20),
-              buildSuplierPhone(ref),
+              buildSuplierPhone(),
               const SizedBox(height: 20),
-              buildSuplierEmail(ref),
-              const SizedBox(height: 20),
-              buildLocation(ref, context),
+              buildSuplierEmail(),
+              // const SizedBox(height: 20),
+              // buildLocation(context),
               const SizedBox(height: 40),
-              buildSaveButton(ref, context),
+              buildSaveButton(context),
               const SizedBox(height: 100) //but
             ],
           ),
@@ -86,74 +83,42 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
     );
   }
 
-  Row buildSaveButton(WidgetRef ref, BuildContext context) {
-    return widget.suplier != null
-        ? Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                  style: MThemeData.raisedButtonStyleSave,
-                  child: Text(
-                    'Update'.tr(),
-                  ),
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      final suplier = SuplierModel(
-                        id: widget.suplier!.id,
-                        name: titleController.text.trim(),
-                        phone: phoneController.text.trim(),
-                        email: emailController.text.trim(),
-                        location: widget.suplier!.location!,
-                      );
-                      // GetIt.I<SuplierBloc>().add(UpdateSupliersEvent(suplier));
-                      // Navigator.pop(context);
+  buildSaveButton(BuildContext context) {
+    /// an instance of the bloc
+    // var supBloc =
+    //     SuplierBloc(databaseOperations: GetIt.I<DatabaseOperations>());
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ElevatedButton(
+            style: MThemeData.raisedButtonStyleSave,
+            onPressed: !_canSave
+                ? null
+                : () {
+                    toast('save ${_mformKey.currentState!.validate()}');
+                    if (_mformKey.currentState!.validate()) {
+                      _mformKey.currentState!.save();
+                      toast('save');
+                      Navigator.pop(context);
                     }
-                  }),
-              ElevatedButton(
-                style: MThemeData.raisedButtonStyleCancel,
-                child: Text(
-                  'Cancel'.tr(),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          )
-        : Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                style: MThemeData.raisedButtonStyleSave,
-                child: Text(
-                  'Save'.tr(),
-                ),
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    final suplier = SuplierModel(
-                      name: titleController.text.trim(),
-                      phone: phoneController.text.trim(),
-                      email: emailController.text.trim(),
-                      location: SuplierModel.laayoune,
-                    );
-                    // GetIt.I<SuplierBloc>().add(AddSupliersEvent(suplier));
-                  }
-                },
-              ),
-              ElevatedButton(
-                style: MThemeData.raisedButtonStyleCancel,
-                child: Text(
-                  'Cancel'.tr(),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          );
+                  },
+            child: Text(
+              widget.suplier != null ? 'Update' : 'Save',
+            )),
+        ElevatedButton(
+          style: MThemeData.raisedButtonStyleCancel,
+          child: Text(
+            'Cancel'.tr(),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
   }
 
-  TextFormField buildSuplierName(WidgetRef ref) {
+  TextFormField buildSuplierName() {
     return TextFormField(
       controller: titleController,
       validator: (text) {
@@ -162,7 +127,14 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
         }
         return null;
       },
+      onChanged: (text) {
+        setState(() {
+          _canSave = text.trim().isNotEmpty;
+        });
+      },
+      maxLength: 50,
       decoration: InputDecoration(
+        counterText: '',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: const BorderSide(),
@@ -177,7 +149,7 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
     );
   }
 
-  TextFormField buildSuplierPhone(WidgetRef ref) {
+  TextFormField buildSuplierPhone() {
     return TextFormField(
       controller: phoneController,
       validator: (text) {
@@ -186,7 +158,9 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
         }
         return null;
       },
+      maxLength: 10,
       decoration: InputDecoration(
+        // counterText:''  ,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: const BorderSide(),
@@ -201,7 +175,7 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
     );
   }
 
-  TextFormField buildSuplierEmail(WidgetRef ref) {
+  TextFormField buildSuplierEmail() {
     return TextFormField(
       controller: emailController,
       validator: (text) {
@@ -210,7 +184,9 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
         }
         return null;
       },
+      maxLength: 50,
       decoration: InputDecoration(
+        counterText: '',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.0),
           borderSide: const BorderSide(),
@@ -225,7 +201,7 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
     );
   }
 
-  Row buildLocation(WidgetRef ref, BuildContext context) {
+  Row buildLocation(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,7 +219,7 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
         Container(
           margin: const EdgeInsets.all(4),
           decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).bottomAppBarColor),
+              // border: Border.all(color: Theme.of(context).bottomAppBarColor),
               borderRadius: BorderRadius.circular(6)),
           height: 50,
           width: 160,
@@ -251,7 +227,7 @@ class AddSuplierState extends ConsumerState<AddSuplier> {
             children: [
               IconButton(
                   icon: const Icon(Icons.location_on_outlined),
-                  color: MThemeData.accentColor,
+                  // color: MThemeData.accentColor,
                   onPressed: () {
                     launchMapsUrl(SuplierModel.laayoune.latitude,
                         SuplierModel.laayoune.longitude);
